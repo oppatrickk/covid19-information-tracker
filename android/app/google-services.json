@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "280932298868",
+    "firebase_url": "https://covid-19-information-tracker-default-rtdb.firebaseio.com",
+    "project_id": "covid-19-information-tracker",
+    "storage_bucket": "covid-19-information-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280932298868:android:937d92c897661eea6ba121",
+        "android_client_info": {
+          "package_name": "com.studioprieto.covid19_information_center"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280932298868-dup758kf4l8h4f1oear6hpvg40dr7sae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWuA180Ud18aLUd33eju-x8LqvFeAs8OU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280932298868-dup758kf4l8h4f1oear6hpvg40dr7sae.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
