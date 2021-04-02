@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:covid19_information_center/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:preload_page_view/preload_page_view.dart';
 
 // Pages
 
@@ -17,10 +18,6 @@ class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:
-        BaseAppBar(
-
-        ),
       body: Column(
         children: <Widget>[
           Container(height: 100,
