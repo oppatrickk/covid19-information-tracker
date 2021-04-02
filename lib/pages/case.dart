@@ -3,12 +3,13 @@ import 'package:covid19_information_center/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:intl/intl.dart';
+import 'package:preload_page_view/preload_page_view.dart';
 
 // Pages
 
 // Widgets
 import 'package:covid19_information_center/widgets/info_card.dart';
-import 'package:covid19_information_center/widgets/app_bar.dart';
 
 
 class CaseSum extends StatefulWidget {
@@ -17,32 +18,49 @@ class CaseSum extends StatefulWidget {
 }
 
 class _CaseSumState extends State<CaseSum> {
-  final databaseReference = FirebaseDatabase.instance.reference();
+  final _db=FirebaseDatabase.instance.reference().child("sheets").child("Daily");
 
   var totalCases;
   var activeCases;
+  var recoveries;
+  var deaths;
+  var date;
 
+  var numFormatter = NumberFormat('#,###,###');
 
-  @override
-  Widget build(BuildContext context) {
-    final _db=FirebaseDatabase.instance.reference().child("sheets").child("Daily");
-
-    _db.once().then((DataSnapshot snapshot){
+  fetchFirebase() async {
+    await Future.delayed(Duration(seconds: 1));
+    await _db.once().then((DataSnapshot snapshot){
+      print(snapshot.value);
       Map<dynamic, dynamic> values=snapshot.value;
-      print(values.toString());
       if (values != null){
         values.forEach((k,v) {
-          print(k);
-          totalCases = v["total_cases"];
-          activeCases = v["active_cases"];
+          setState(() {
+            totalCases = v["total_cases"];
+            activeCases = v["active_cases"];
+            recoveries = v["recoveries"];
+            deaths = v["deaths"];
+            date = v["date"];
+          });
         });
       }
     });
+  }
 
+  @override
+  void initState() {
+    fetchFirebase();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:
-        BaseAppBar(),
-      body: Column(
+      body: totalCases == null
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : Column(
         children: <Widget>[
           Container(
               height: 100,
@@ -98,27 +116,28 @@ class _CaseSumState extends State<CaseSum> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      SizedBox(
-                        width: 100,
-                      ),
-                      Text("As of March 04, 2021"),
+                      Text("As of $date"),
                     ],
                   ),
                   InfoCard(
+                    effectedWidth: 150,
                     title: "Total Cases",
-                    effectedNum: totalCases,
+                    effectedNum: numFormatter.format(totalCases),
                   ),
                   InfoCard(
+                    effectedWidth: 150,
                     title: "Active Cases",
-                    effectedNum: activeCases,
+                    effectedNum: numFormatter.format(activeCases),
                   ),
                   InfoCard(
+                    effectedWidth: 150,
                     title: "Recoveries",
-                    effectedNum: 4216,
+                    effectedNum: numFormatter.format(recoveries),
                   ),
                   InfoCard(
-                    title: "Death",
-                    effectedNum: 213,
+                    effectedWidth: 150,
+                    title: "Deaths",
+                    effectedNum: numFormatter.format(deaths),
                   ),
                 ],
               )
@@ -131,27 +150,11 @@ class _CaseSumState extends State<CaseSum> {
                   children: <Widget>[
                     RaisedButton(
                       onPressed:(){
-                        _db.once().then((DataSnapshot snapshot){
-                          Map<dynamic, dynamic> values=snapshot.value;
-                          print(values.toString());
-                          if (values != null){
-                            values.forEach((k,v) {
-                              print(k);
-                              print(v["date"]);
-                              print(v["total_cases"]);
-                              totalCases = v["total_cases"];
-
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context, "/case");
-
-                            });
-                          }
-                        });
-
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/case");
                       },
-                      child: Text("Retrieve Data"),
+                      child: Text("Refresh"),
                     ),
-                    Text(""),
                   ],
                 ),
               ],

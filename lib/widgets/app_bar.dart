@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:covid19_information_center/constant.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:covid19_information_center/main.dart';
+import 'package:covid19_information_center/widgets/page_controller.dart';
 
 class BaseAppBar extends StatelessWidget {
   final int selectedItem;
-  final int currentIndex = 0;
 
   const BaseAppBar({
     Key key,
@@ -13,6 +14,7 @@ class BaseAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       backgroundColor: Color(0xFFFFFFFF),
@@ -20,24 +22,8 @@ class BaseAppBar extends StatelessWidget {
       unselectedItemColor: Colors.blue.withOpacity(.4),
       selectedFontSize: 14,
       unselectedFontSize: 14,
-      currentIndex: currentIndex,
+      currentIndex: 1,
 
-      onTap: (index){
-        switch(index){
-          case 0:
-            Navigator.pushNamed(context, "/home");
-            break;
-          case 1:
-            Navigator.pushNamed(context, "/case");
-            break;
-          case 2:
-            Navigator.pushNamed(context, "/information");
-            break;
-          case 3:
-            Navigator.pushNamed(context, "/about");
-            break;
-        }
-      },
       items:[
         BottomNavigationBarItem(
           title: Text('Home'),
@@ -59,4 +45,3 @@ class BaseAppBar extends StatelessWidget {
     );
   }
 }
-
