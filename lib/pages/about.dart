@@ -6,10 +6,8 @@ import 'package:preload_page_view/preload_page_view.dart';
 // Pages
 
 // Widgets
-import 'package:covid19_information_center/widgets/app_bar.dart';
 
-class About extends StatefulWidget{
-
+class About extends StatefulWidget {
   @override
   _AboutState createState() => _AboutState();
 }
@@ -20,48 +18,9 @@ class _AboutState extends State<About> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Container(height: 100,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Color(0xFF3383CD),
-                    Color(0xFF11249F),
-                  ],
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.topRight,
-                    // child: SvgPicture.asset("assets/icons/menu.svg"), Add Icon here later
-                  ),
-                  SizedBox(height: 20),
-                  Expanded(
-                      child: Stack(
-                        children: <Widget>[
-                          Positioned(
-                            top: 25,
-                            left: 30,
-                            child: Text(
-                              "About",
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                  )
-                ],
-              )
-          ),
           Container(
-              padding: EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 20),
+              padding:
+                  EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 20),
               width: double.infinity,
               height: 300,
               decoration: BoxDecoration(
@@ -84,8 +43,7 @@ class _AboutState extends State<About> {
                     ],
                   ),
                 ],
-              )
-          ),
+              )),
           Container(
             padding: EdgeInsets.only(left: 20, top: 20, right: 30, bottom: 20),
             width: double.infinity,
@@ -100,7 +58,8 @@ class _AboutState extends State<About> {
                   children: <Widget>[
                     Align(
                       alignment: Alignment.topCenter,
-                      child: SvgPicture.asset("assets/images/DOH_logo.svg", height: 90, width: 90),
+                      child: SvgPicture.asset("assets/images/DOH_logo.svg",
+                          height: 90, width: 90),
                     ),
                     Text("\t\tDepartment of Health\n"
                         "\t\tBicol Center for Health Development"),
