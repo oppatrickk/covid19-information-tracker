@@ -1,48 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Pages
 import 'package:covid19_information_center/pages/home.dart';
 import 'package:covid19_information_center/pages/case.dart';
 import 'package:covid19_information_center/pages/information.dart';
-import 'package:covid19_information_center/pages/about.dart';
+import 'package:covid19_information_center/pages/vaccine.dart';
 
-class BaseAppBar extends StatefulWidget{
+class BaseAppBar extends StatefulWidget {
   final String title;
   final AppBar appBar;
   final List<Widget> widgets;
 
-  const BaseAppBar(
-      {Key key, this.title, this.appBar, this.widgets})
+  const BaseAppBar({Key key, this.title, this.appBar, this.widgets})
       : super(key: key);
 
   @override
   _BaseAppBarState createState() => _BaseAppBarState();
-
 }
 
 class _BaseAppBarState extends State<BaseAppBar> {
-
   PageController _pageController;
   int _page = 0;
   Duration pageChanging = Duration(milliseconds: 001);
   Curve animationCurve = Curves.linear;
   final List<String> titleList = [
-    "COVID-19 Information Tracker",
+    "",
     "Case Summary",
-    "Information",
-    "About"
+    "Vaccine Progress",
+    "Information"
   ];
   final List<Icon> iconList = [
     Icon(Icons.coronavirus, color: Colors.white),
-    Icon(Icons.leaderboard, color: Colors.white),
-    Icon(Icons.sticky_note_2, color: Colors.white),
-    Icon(Icons.library_books, color: Colors.white),
+    Icon(Icons.coronavirus, color: Colors.white),
+    Icon(FontAwesomeIcons.syringe, color: Colors.white),
+    Icon(Icons.info, color: Colors.white),
   ];
-  final List<double> heightList = [
-    160, 80, 80, 80
-  ];
-
+  final List<double> heightList = [160, 80, 80, 80];
 
   @override
   void initState() {
@@ -67,6 +62,7 @@ class _BaseAppBarState extends State<BaseAppBar> {
         elevation: 0,
         leadingWidth: 50,
         toolbarHeight: heightList[_page],
+        actions: <Widget>[],
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -78,14 +74,61 @@ class _BaseAppBarState extends State<BaseAppBar> {
               ])),
         ),
       ),
+      endDrawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("Drawer"),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: Text("About"),
+              leading: Icon(Icons.help),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text("Data Source"),
+              leading: Icon(Icons.source),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text("Settings"),
+              leading: Icon(Icons.settings),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text("Submit Feedback"),
+              leading: Icon(Icons.recommend),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text("Report Bugs"),
+              leading: Icon(Icons.bug_report),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
       body: PageView(
         controller: _pageController,
         onPageChanged: onPageChanged,
         children: [
           Home(),
           CaseSum(),
+          Vaccine(),
           Information(),
-          About(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -104,15 +147,15 @@ class _BaseAppBarState extends State<BaseAppBar> {
           ),
           BottomNavigationBarItem(
             title: Text('Cases'),
-            icon: Icon(Icons.leaderboard),
+            icon: Icon(Icons.coronavirus),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Vaccine'),
+            icon: Icon(FontAwesomeIcons.syringe),
           ),
           BottomNavigationBarItem(
             title: Text('Information'),
-            icon: Icon(Icons.sticky_note_2),
-          ),
-          BottomNavigationBarItem(
-            title: Text('About'),
-            icon: Icon(Icons.library_books),
+            icon: Icon(Icons.info),
           ),
         ],
       ),
