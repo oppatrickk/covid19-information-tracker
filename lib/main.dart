@@ -12,16 +12,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'COVID-19 Information Center',
       theme: ThemeData(
-          scaffoldBackgroundColor: kBackgroundColor,
           fontFamily: "NotoSansJP",
           textTheme: TextTheme(
             bodyText2: TextStyle(color: kBodyTextColor),
           )),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          body: Container(
-            child: BaseAppBar(),
-          )),
+          body: BaseAppBar(),
+        ),
     );
   }
 }

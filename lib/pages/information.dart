@@ -16,51 +16,60 @@ class Information extends StatefulWidget {
 class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Container(
-              padding:
-                  EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 20),
-              width: double.infinity,
-              height: 300,
-              decoration: BoxDecoration(
-                color: kPrimaryColor.withOpacity(0.10),
-              ),
-              child: Wrap(
-                runSpacing: 20,
-                spacing: 20,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text("COVID-19 Guidelines:\n"
-                          "\t\tInsert Text\n\n"
-                          "How to wear masks properly:\n"
-                          "\t\tInsert Text\n\n"
-                          "Myths:\n"
-                          "\t\tInsert Text\n\n"),
-                    ],
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.center,
+          colors: <Color>[
+            Color(0xFF3383CD),
+            Color(0xFF11249F),
+          ],
+        ),
+      ),
+
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Icons.arrow_back_ios),
+            color: Colors.white,
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          title: Text('Details',
+              style: TextStyle(
+                  color: Colors.white)),
+        ),
+        backgroundColor: Colors.transparent,
+        body: ListView(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height - 82.0,
+                  width: MediaQuery.of(context).size.width,
+                  color: (Colors.transparent),
+                ),
+                Positioned(
+                  top: 25.0,
+                  child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(45.0),
+                            topRight: Radius.circular(45.0),
+                          ),
+                          color: Colors.white),
+                      height: MediaQuery.of(context).size.height - 100.0,
+                      width: MediaQuery.of(context).size.width
                   ),
-                ],
-              )),
-          Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 60,
-                    ),
-                    Text("Wear Mask, Wash Hands, Keep Distance"),
-                  ],
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
