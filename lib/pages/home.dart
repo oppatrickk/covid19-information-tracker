@@ -39,12 +39,18 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 80,
+        backgroundColor: kAppBarColor,
+      ),
       body: philippineData == null
           ? Center(
               child: CircularProgressIndicator(),
             )
           : ListView(
               children: <Widget>[
+
                 Expanded(
                   child: Container(
                       padding: EdgeInsets.only(

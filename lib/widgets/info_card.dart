@@ -6,6 +6,7 @@ class InfoCard extends StatefulWidget {
   final String effectedNum;
   final double effectedWidth;
   final Color iconColor;
+
   const InfoCard({
     Key key,
     this.title,
@@ -60,8 +61,8 @@ class _InfoCardState extends State<InfoCard> {
                       TextSpan(
                         text: "${widget.effectedNum}",
                         style: Theme.of(context).textTheme.headline6.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ],
                   ),

@@ -17,32 +17,8 @@ class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.center,
-          colors: <Color>[
-            Color(0xFF3383CD),
-            Color(0xFF11249F),
-          ],
-        ),
-      ),
-
+      color: kAppBarColor,
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(Icons.arrow_back_ios),
-            color: Colors.white,
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          title: Text('Details',
-              style: TextStyle(
-                  color: Colors.white)),
-        ),
         backgroundColor: Colors.transparent,
         body: ListView(
           children: [
@@ -54,7 +30,6 @@ class _InformationState extends State<Information> {
                   color: (Colors.transparent),
                 ),
                 Positioned(
-                  top: 25.0,
                   child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -62,7 +37,7 @@ class _InformationState extends State<Information> {
                             topRight: Radius.circular(45.0),
                           ),
                           color: Colors.white),
-                      height: MediaQuery.of(context).size.height - 100.0,
+                      height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width
                   ),
                 ),
