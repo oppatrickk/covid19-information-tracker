@@ -5,7 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 // Widgets
-import 'package:covid19_information_center/widgets/app_bar.dart';
+import 'package:covid19_information_center/widgets/main_app_bar.dart';
+import 'package:covid19_information_center/database/initialize_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
           )),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          body: BaseAppBar(),
+          body: InitializeData(),
         ),
     );
   }
