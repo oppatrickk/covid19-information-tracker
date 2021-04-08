@@ -26,6 +26,7 @@ dependencies:
   flutter_svg: ^0.19.3
   firebase_database: ^6.1.0
   firebase_core: ^1.0.1
+  firebase_auth: ^1.0.3
   http: ^0.13.0
   page_transition: ^1.1.7+6
   intl: ^0.17.0
