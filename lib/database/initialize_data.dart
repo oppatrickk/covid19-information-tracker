@@ -1,3 +1,71 @@
+import 'package:covid19_information_center/widgets/main_app_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:progress_indicators/progress_indicators.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+
+
+// Database
+import 'package:covid19_information_center/database/diseasesh/diseasesh_provider.dart';
+import 'package:covid19_information_center/database/diseasesh/diseasesh_model.dart';
+import 'package:covid19_information_center/database/diseasesh/diseasesh_service.dart';
+
+
+class LoadingData extends StatefulWidget {
+  @override
+  _LoadingDataState createState() => _LoadingDataState();
+}
+
+
+class _LoadingDataState extends State<LoadingData> {
+  ApiService apiService = ApiService();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Provider.of<FetchDataProvider>(context);
+
+    final provider = Provider.of<FetchDataProvider>(context);
+
+    return Scaffold(
+        body: provider.loading == true
+            ? Container(
+            padding: EdgeInsets.only(top: 250),
+            child: Center(
+              child: Column(
+                children: [
+                  GlowingProgressIndicator(
+                    child: HeartbeatProgressIndicator(
+                      child: FaIcon(FontAwesomeIcons.shieldVirus,
+                          color: Colors.blueAccent),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    "Loading Data",
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                ],
+              ),
+            )
+        )
+            : MainAppBar(),
+    );
+  }
+}
+
+
+
+/*
+
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:covid19_information_center/constant.dart';
@@ -11,7 +79,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Widgets
 import 'package:covid19_information_center/database/firebase_data.dart';
-import 'file:///C:/Users/Patrick/Documents/Projects/Programming/Flutter/covid19_information_center/lib/database/diseasesh_data.dart';
+import 'file:///C:/Users/Patrick/Documents/Projects/Programming/Flutter/covid19_information_center/lib/database/diseasesh_service.dart';
 import 'package:covid19_information_center/widgets/main_app_bar.dart';
 
 class InitializeData extends StatefulWidget {
@@ -85,3 +153,5 @@ class _InitializeDataState extends State<InitializeData> {
   }
 
 }
+
+ */

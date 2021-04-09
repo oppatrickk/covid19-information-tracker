@@ -8,7 +8,6 @@ import 'package:covid19_information_center/pages/cases_subpages/cases_region_sub
 import 'package:covid19_information_center/pages/cases_subpages/cases_region_subpages/cases_region_weekly.dart';
 
 // Widgets
-import 'package:covid19_information_center/widgets/base_app_bar.dart';
 
 class Region extends StatefulWidget{
 
@@ -36,7 +35,7 @@ class _RegionState extends State<Region> {
             ),
             bottom: TabBar(
               indicatorSize: TabBarIndicatorSize.label,
-              indicatorColor: kUIColor,
+              indicatorColor: kSelectedUIColor,
               onTap: (index) {
                 // Tab index when user select it, it start from zero
               },
@@ -44,7 +43,7 @@ class _RegionState extends State<Region> {
                 Tab(text: "Daily"),
                 Tab(text: "Weekly"),
               ],
-              labelColor: kUIColor,
+              labelColor: kSelectedUIColor,
               labelStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18.0,
@@ -53,7 +52,7 @@ class _RegionState extends State<Region> {
                 fontWeight: FontWeight.normal,
                 fontSize: 12.0,
               ),
-              unselectedLabelColor: Colors.white,
+              unselectedLabelColor: kUnselectedUIColor,
             ),
           ),
           body: TabBarView(

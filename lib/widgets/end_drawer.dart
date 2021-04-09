@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Pages
 
-
 class BaseDrawer extends StatelessWidget {
   const BaseDrawer({
     Key key,
@@ -15,6 +14,7 @@ class BaseDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
+
           DrawerHeader(
             child: Text("Drawer"),
             decoration: BoxDecoration(

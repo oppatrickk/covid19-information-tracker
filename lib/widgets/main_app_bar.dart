@@ -55,6 +55,7 @@ class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawerEdgeDragWidth: 50,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
