@@ -1,30 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:covid19_information_center/constant.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 // Widgets
+import 'package:covid19_information_center/widgets/active_recovered_death.dart';
 
 // Database
-import 'package:covid19_information_center/database/initialize_data.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_service.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_model.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_provider.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
+import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
+import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
+
 
 class Nationwide extends StatefulWidget {
+
   @override
   _NationwideState createState() => _NationwideState();
 }
 
 class _NationwideState extends State<Nationwide> {
 
-  var numFormat = NumberFormat('#,###,000');
+  var decimalOne = NumberFormat('#,###,###.0');
+  var decimalTwo = NumberFormat('#,###,###.00');
+  var numbers = NumberFormat('#,###,###');
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<FetchDataProvider>(context);
+
+    final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
+    final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
+
+    var provider;
+
+    if (worldometer.countries[157].todayCases == 0)
+    {
+      provider = Provider.of<FetchBackupDataProvider>(context);
+    }
+    else
+    {
+      provider = Provider.of<FetchWorldometerDataProvider>(context);
+    }
 
     return Container(
       color: kAppBarColor,
@@ -61,16 +78,163 @@ class _NationwideState extends State<Nationwide> {
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
+                  padding: const EdgeInsets.only(top: 35.0),
                   child: RefreshIndicator(
                     onRefresh: () async {
                       // Add Refresh here
                     },
                     child: ListView(
                       children: [
-                        Container(
-                          child: Text(provider.randomJson[1].country),
-
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 30.0, right: 30.0),
+                          child: Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "Total Confirmed Cases",
+                                    style: TextStyle(
+                                      color: kBodyTextColor2,
+                                    ),
+                                ),
+                                Text(
+                                  numbers.format(provider.countries[157].cases),
+                                  style: TextStyle(
+                                    color: kBodyTextColor1,
+                                    fontSize: 48.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                                  child: Container(
+                                    height: 6.0,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          color: Colors.orange,
+                                          width: provider.countries[157].percentageActive * 3,
+                                        ),
+                                        Container(
+                                          color: Colors.green,
+                                          width: provider.countries[157].percentageRecovered * 3,
+                                        ),
+                                        Container(
+                                          color: Colors.red,
+                                          width: provider.countries[157].percentageDeaths * 3,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0, bottom: 25.0),
+                                  child: Container(
+                                    height: 100.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 1,
+                                          blurRadius: 2,
+                                          offset: Offset(0, 1),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        ActiveRecoveredDeath(
+                                          icon: Icon(Icons.radio_button_checked, color: Colors.orange,),
+                                          number: Text(numbers.format(provider.countries[157].active),
+                                            style: TextStyle(
+                                              color: kBodyTextColor1,
+                                              fontSize: 20.0,
+                                          ),
+                                        ),
+                                          title: Text("Active Cases",
+                                            style: TextStyle(
+                                              color: kBodyTextColor2,
+                                            ),
+                                          ),
+                                        ),
+                                        ActiveRecoveredDeath(
+                                          icon: Icon(Icons.radio_button_checked, color: Colors.green,),
+                                            number: Text(numbers.format(provider.countries[157].recovered),
+                                              style: TextStyle(
+                                                color: kBodyTextColor1,
+                                                fontSize: 20.0,
+                                              ),
+                                            ),
+                                            title: Text("Recovered",
+                                            style: TextStyle(
+                                              color: kBodyTextColor2,
+                                              ),
+                                            ),
+                                        ),
+                                        ActiveRecoveredDeath(
+                                          icon: Icon(Icons.radio_button_checked, color: Colors.red,),
+                                            number: Text(numbers.format(provider.countries[157].deaths),
+                                              style: TextStyle(
+                                                color: kBodyTextColor1,
+                                                fontSize: 20.0,
+                                              ),
+                                            ),
+                                            title: Text("Deaths",
+                                              style: TextStyle(
+                                                color: kBodyTextColor2,
+                                              ),
+                                            ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "New Cases",
+                                  style: TextStyle(
+                                    color: kBodyTextColor2,
+                                  ),
+                                ),
+                                Text(
+                                  numbers.format(provider.countries[157].todayCases),
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 36.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 2.0,
+                                  child: BarChart(
+                                    BarChartData(
+                                      barGroups: getBarGroups(),
+                                      borderData: FlBorderData(show: false),
+                                      titlesData: FlTitlesData(
+                                        leftTitles: SideTitles(
+                                          showTitles: false,
+                                        ),
+                                        bottomTitles: SideTitles(
+                                          showTitles: true,
+                                          getTitles: getWeek,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "1"
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -82,5 +246,47 @@ class _NationwideState extends State<Nationwide> {
         ),
       ),
     );
+  }
+}
+
+getBarGroups() {
+  List<double> barChartDatas = [11020, 8344, 9363, 6400, 9179, 12206, 12674];
+  List<BarChartGroupData> barChartGroups = [];
+  barChartDatas.asMap().forEach(
+        (i, value) => barChartGroups.add(
+      BarChartGroupData(
+        x: i,
+        barRods: [
+          BarChartRodData(
+            y: value,
+            //This is not the proper way, this is just for demo
+            colors: [Colors.red],
+            width: 16,
+          )
+        ],
+      ),
+    ),
+  );
+  return barChartGroups;
+}
+
+String getWeek(double value) {
+  switch (value.toInt()) {
+    case 0:
+      return '04/04';
+    case 1:
+      return '04/05';
+    case 2:
+      return '04/06';
+    case 3:
+      return '04/07';
+    case 4:
+      return '04/08';
+    case 5:
+      return '04/09';
+    case 6:
+      return '04/10';
+    default:
+      return '';
   }
 }
