@@ -12,13 +12,6 @@ import 'package:covid19_information_center/pages/vaccine.dart';
 
 class MainAppBar extends StatefulWidget {
 
-  final String title;
-  final AppBar appBar;
-  final List<Widget> widgets;
-
-  const MainAppBar({Key key, this.title, this.appBar, this.widgets})
-      : super(key: key);
-
   @override
   _MainAppBarState createState() => _MainAppBarState();
 }

@@ -58,6 +58,13 @@
             </list>
           </value>
         </entry>
+        <entry key="equatable">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="fake_async">
           <value>
             <list>
@@ -111,6 +118,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_database-6.1.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="fl_chart">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/fl_chart-0.35.0/lib" />
             </list>
           </value>
         </entry>
@@ -349,6 +363,7 @@
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.15.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/convert-2.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.2/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-1.0.3/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_platform_interface-4.0.2/lib" />
@@ -357,6 +372,7 @@
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_platform_interface-4.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_database-6.1.0/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/fl_chart-0.35.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-0.19.3/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-9.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.0/lib" />

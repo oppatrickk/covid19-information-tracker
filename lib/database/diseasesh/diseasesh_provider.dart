@@ -15,11 +15,11 @@ class FetchDataProvider with ChangeNotifier {
 
   FetchDataProvider() {
     initialize();
-    print('we have been initialized ');
+    print('Loading: 75%');
   }
 
   Future<void> initialize() async {
-    print('we have been called from ctr ');
+    print('Loading: 25%');
 
     await getDataFromInternet();
   }
@@ -38,7 +38,7 @@ class FetchDataProvider with ChangeNotifier {
   }
 
   getDataFromInternet() async {
-    print('we have been called from ctr -------2');
+    print('Loading: 50%');
 
     loading = true;
     randomJson = await apiService.getApiDataFromRandomJson();
