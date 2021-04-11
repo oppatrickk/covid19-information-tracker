@@ -50,6 +50,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "equatable",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "fake_async",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0",
       "packageUri": "lib/",
@@ -94,6 +100,12 @@
     {
       "name": "firebase_database",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_database-6.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "fl_chart",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/fl_chart-0.35.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -296,7 +308,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-04-09T19:59:20.044599Z",
+  "generated": "2021-04-10T17:58:23.480823Z",
   "generator": "pub",
   "generatorVersion": "2.13.0-104.0.dev"
 }

@@ -7,6 +7,7 @@ import 'package:preload_page_view/preload_page_view.dart';
 
 // Widgets
 import 'package:covid19_information_center/main.dart';
+import 'package:covid19_information_center/widgets/information_card.dart';
 
 class Information extends StatefulWidget {
   @override
@@ -38,7 +39,37 @@ class _InformationState extends State<Information> {
                           ),
                           color: Colors.white),
                       height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width
+                      width: MediaQuery.of(context).size.width),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 35.0),
+                  child: Column(
+                    children: [
+                      InformationCard(
+                        information: "Symptoms",
+                      ),
+                      InformationCard(
+                        information: "Myths",
+                      ),
+                      InformationCard(
+                        information: "Facts",
+                      ),
+                      InformationCard(
+                        information: "Hotline",
+                      ),
+                      InformationCard(
+                        information: "Lockdown",
+                      ),
+                      InformationCard(
+                        information: "Travel Guidelines",
+                      ),
+                      InformationCard(
+                        information: "Vaccines",
+                      ),
+                      InformationCard(
+                        information: "Variants",
+                      ),
+                    ],
                   ),
                 ),
               ],

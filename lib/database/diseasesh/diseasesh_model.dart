@@ -22,6 +22,10 @@ class RandomJson {
   int population;
   String country;
 
+  num percentageActive;
+  num percentageRecovered;
+  num percentageDeaths;
+
   RandomJson({
     this.cases,
     this.deaths,
@@ -45,6 +49,10 @@ class RandomJson {
 
     this.population,
     this.country,
+
+    this.percentageActive,
+    this.percentageRecovered,
+    this.percentageDeaths,
   });
 
   RandomJson.fromJson(Map<String, dynamic> json) {
@@ -70,6 +78,10 @@ class RandomJson {
 
     population = json['population'];
     country = json['country'];
+
+    percentageActive =  (json['active'] / json['cases']) * 100;
+    percentageRecovered =  (json['recovered'] / json['cases']) * 100;
+    percentageDeaths =  (json['deaths'] / json['cases']) * 100;
   }
 
   Map<String, dynamic> toJson() {
@@ -97,6 +109,10 @@ class RandomJson {
 
     data['population'] = this.population;
     data['country'] = this.country;
+
+    data['percentageActive'] = this.percentageActive;
+    data['percentageRecovered'] = this.percentageRecovered;
+    data['percentageDeaths'] = this.percentageDeaths;
 
     return data;
   }
