@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:covid19_information_center/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/intl.dart';
-import 'package:preload_page_view/preload_page_view.dart';
-import 'package:progress_indicators/progress_indicators.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 // Pages
@@ -15,23 +9,69 @@ import 'package:covid19_information_center/pages/cases_subpages/cases_region.dar
 import 'package:covid19_information_center/pages/cases_subpages/cases_nationwide.dart';
 
 // Database
-import 'package:covid19_information_center/database/diseasesh/diseasesh_provider.dart';
-import 'package:covid19_information_center/database/firebase/firebase_service.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
+import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
+import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 
 // Widgets
-import 'package:covid19_information_center/widgets/info_card.dart';
+import 'package:covid19_information_center/widgets/cases/case_card.dart';
 
 class CaseSum extends StatefulWidget {
+
   @override
   _CaseSumState createState() => _CaseSumState();
 }
 
 class _CaseSumState extends State<CaseSum> {
-  var numFormatter = NumberFormat('#,###,###');
+
+  var today = DateTime.now();
+  var yesterday = DateTime.now().subtract(Duration(days:1));
+
+  var dateFormat = DateFormat('MMMM dd, yyyy');
+
+  var decimalOne = NumberFormat('#,###,###.0');
+  var decimalTwo = NumberFormat('#,###,###.00');
+  var numbers = NumberFormat('#,###,###');
+
+  var timeNow = TimeOfDay.now();
+  var timeReset = TimeOfDay(hour: 0, minute: 00);
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<FetchDataProvider>(context);
+
+    final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
+    final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
+
+    var provider;
+    var date;
+    var time;
+
+    double _timeNow = timeReset.hour.toDouble() + (timeReset.minute.toDouble() / 60);
+    double _timeReset = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
+
+    if (worldometer.countries[157].todayCases == 0) {
+      provider = Provider.of<FetchBackupDataProvider>(context);
+    }
+    else {
+      provider = Provider.of<FetchWorldometerDataProvider>(context);
+    }
+
+    if (worldometer.countries[157].todayCases == 0 && _timeNow >= _timeReset) {
+        date = yesterday;
+    }
+    else if (worldometer.countries[157].todayCases != 0 && _timeNow >= 4.0) {
+        date = today;
+    }
+    else {
+      date = yesterday;
+    }
+
+
+    Future <void> _onRefresh() async {
+      await Future.delayed(Duration(milliseconds: 1000));
+      Provider.of<FetchWorldometerDataProvider>(context, listen: false).initialize();
+      Provider.of<FetchJhucsseDataProvider>(context, listen: false).initialize();
+    }
 
     return Container(
       color: kAppBarColor,
@@ -56,7 +96,7 @@ class _CaseSumState extends State<CaseSum> {
                   width: MediaQuery.of(context).size.width),
             ),
             RefreshIndicator(
-              onRefresh: () async {},
+              onRefresh: () => _onRefresh(),
               child: ShaderMask(
                 shaderCallback: (Rect rect) {
                   return LinearGradient(
@@ -82,265 +122,26 @@ class _CaseSumState extends State<CaseSum> {
                   child: ListView.builder(
                     itemCount: 1,
                     itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          Container(
-                            /*Nationwide Cases */
-                            padding: EdgeInsets.only(
-                                left: 30, top: 10, right: 30, bottom: 20),
-                            width: double.infinity,
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 10, top: 10, right: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 2,
-                                    offset: Offset(0, 1),
-                                  ),
-                                ],
-                              ),
-                              child: Wrap(
-                                runSpacing: 5,
-                                spacing: 20,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Nationwide Cases",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "As of April 10, 2021 | 4 PM",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Total Confirmed Cases",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        numFormatter.format(
-                                            provider.randomJson[157].cases),
-                                        style: TextStyle(
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "+",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                      Text(
-                                        numFormatter.format(
-                                            provider.randomJson[157].todayCases),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                      Text(
-                                        " Newly Reported Cases",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Spacer(
-                                        flex: 2,
-                                      ),
-                                      Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: OutlinedButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Nationwide()),
-                                            );
-                                          },
-                                          child: Text(
-                                              "Read More",
-                                              style: TextStyle(
-                                              ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 15.0, left: 30, right: 30.0),
+                        child: Column(
+                          children: [
+                            CaseCard(
+                              title: "Nationwide Cases",
+                              date: "As of ${dateFormat.format(date)} | 4PM",
+                              totalCases: numbers.format(provider.countries[157].cases),
+                              newCases: numbers.format(provider.countries[157].todayCases),
+                              page: Nationwide(),
                             ),
-                          ),
-                          Container(
-                            /*Region V Cases */
-                            padding: EdgeInsets.only(
-                                left: 30, top: 10, right: 30, bottom: 20),
-                            width: double.infinity,
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 10, top: 10, right: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 2,
-                                    offset: Offset(0, 1),
-                                  ),
-                                ],
-                              ),
-                              child: Wrap(
-                                runSpacing: 5,
-                                spacing: 20,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Bicol Region Cases",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "As of April 9, 2021 | 4 PM",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Total Cases",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "5,854",
-                                        style: TextStyle(
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "+",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                      Text(
-                                        "65",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                      Text(
-                                        " Newly Reported Cases",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Spacer(
-                                        flex: 2,
-                                      ),
-                                      Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: OutlinedButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Region()),
-                                            );
-                                          },
-                                          child: Text(
-                                            "Read More",
-                                            style: TextStyle(
-
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
+                            CaseCard(
+                              title: "Bicol Region Cases",
+                              date: "As of April 09, 2021 | 11 PM",
+                              totalCases: numbers.format(provider.countries[157].cases),
+                              newCases: numbers.format(provider.countries[157].todayCases),
+                              page: Region(),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     },
                   ),

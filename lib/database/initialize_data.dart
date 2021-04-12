@@ -1,23 +1,24 @@
-import 'package:covid19_information_center/widgets/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:covid19_information_center/constant.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:intl/intl.dart';
-import 'package:preload_page_view/preload_page_view.dart';
-
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Database
-import 'package:covid19_information_center/database/diseasesh/diseasesh_provider.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_model.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_service.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_service.dart';
+import 'package:covid19_information_center/database/worldometer/backup_service.dart';
+import 'package:covid19_information_center/database/jhucsse/jhucsse_service.dart';
+
+import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
+import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
 
 import 'package:covid19_information_center/database/firebase/firebase_service.dart';
+
+// Widgets
+import 'package:covid19_information_center/widgets/navigation/main_app_bar.dart';
 
 
 class LoadingData extends StatefulWidget {
@@ -27,7 +28,11 @@ class LoadingData extends StatefulWidget {
 
 
 class _LoadingDataState extends State<LoadingData> {
-  ApiService apiService = ApiService();
+  WorldometerApiService worldometerApiService = WorldometerApiService();
+  BackupApiService backupApiService = BackupApiService();
+  JhucsseApiService jhucsseApiService = JhucsseApiService();
+
+
   Query _query;
 
   @override
@@ -43,10 +48,12 @@ class _LoadingDataState extends State<LoadingData> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<FetchDataProvider>(context);
+    Provider.of<FetchWorldometerDataProvider>(context);
+    Provider.of<FetchBackupDataProvider>(context);
+    Provider.of<FetchJhucsseDataProvider>(context);
 
     final Future<FirebaseApp> _future = Firebase.initializeApp();
-    final provider = Provider.of<FetchDataProvider>(context);
+    final provider = Provider.of<FetchWorldometerDataProvider>(context);
 
     return Scaffold(
         body: provider.loading == true && _query != null
@@ -85,7 +92,7 @@ class _LoadingDataState extends State<LoadingData> {
 
 // Widgets
 import 'package:covid19_information_center/database/firebase_service.dart';
-import 'file:///C:/Users/Patrick/Documents/Projects/Programming/Flutter/covid19_information_center/lib/database/diseasesh_service.dart';
+import 'file:///C:/Users/Patrick/Documents/Projects/Programming/Flutter/covid19_information_center/lib/database/service.dart';
 import 'package:covid19_information_center/widgets/main_app_bar.dart';
 
 class InitializeData extends StatefulWidget {

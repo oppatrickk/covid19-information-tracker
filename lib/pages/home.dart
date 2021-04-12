@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:covid19_information_center/constant.dart';
-import 'package:preload_page_view/preload_page_view.dart';
-import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Pages
 
 // Widgets
-import 'package:covid19_information_center/widgets/end_drawer.dart';
-import 'package:covid19_information_center/widgets/mask_hugas_iwas.dart';
+import 'package:covid19_information_center/widgets/home/cases_percentage.dart';
+import 'package:covid19_information_center/widgets/home/mask_hugas_iwas.dart';
 
 // Database
-import 'package:covid19_information_center/database/initialize_data.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_service.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_model.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_provider.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
+import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
+import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -28,10 +23,25 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    var formatter1 = NumberFormat('#,###,###');
-    var formatter2 = NumberFormat('#,###,###.0');
 
-    final provider = Provider.of<FetchDataProvider>(context);
+    var decimalOne = NumberFormat('#,###,###.0');
+    var decimalTwo = NumberFormat('#,###,###.00');
+    var numbers = NumberFormat('#,###,###');
+
+
+    final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
+    final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
+
+    var provider;
+
+    if (worldometer.countries[157].todayCases == 0)
+    {
+      provider = Provider.of<FetchBackupDataProvider>(context);
+    }
+    else
+    {
+      provider = Provider.of<FetchWorldometerDataProvider>(context);
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -83,7 +93,7 @@ class _HomeState extends State<Home> {
                   ),
                   Container(
                     child: Text(
-                      formatter1.format(provider.randomJson[157].cases),
+                      numbers.format(provider.countries[157].cases),
                       style: TextStyle(
                         fontSize: 64,
                         fontWeight: FontWeight.bold,
@@ -106,8 +116,8 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Text(
-                            formatter1
-                                .format(provider.randomJson[157].todayCases),
+                            numbers
+                                .format(provider.countries[157].todayCases),
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.deepOrange,
@@ -125,101 +135,33 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 50.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Column(
-                          children: [
-                            Container(
-                              height: 15,
-                              width:
-                                  provider.randomJson[157].percentageActive * 3,
-                              decoration: BoxDecoration(
-                                color: Colors.greenAccent,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(45),
-                                    bottomLeft: Radius.circular(45)),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  formatter2.format(provider
-                                      .randomJson[157].percentageActive),
-                                  style: TextStyle(
-                                    color: kBodyTextColor1,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  "%",
-                                  style: TextStyle(
-                                    color: kBodyTextColor1,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text("Active",
-                              style: TextStyle(
-                                color: kBodyTextColor2,
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ],
+                        CasesPercentage(
+                          width: provider.countries[157].percentageActive * 3,
+                          text1: decimalOne.format(provider.countries[157].percentageActive),
+                          text2: "Active",
+                          color: Colors.greenAccent,
+                          radius: BorderRadius.only(
+                              topLeft: Radius.circular(45),
+                              bottomLeft: Radius.circular(45),
+                          ),
                         ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 15,
-                              width:
-                                  provider.randomJson[157].percentageRecovered *
-                                      3,
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(45),
-                                    bottomRight: Radius.circular(45)),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  formatter2.format(provider
-                                      .randomJson[157].percentageRecovered),
-                                  style: TextStyle(
-                                    color: kBodyTextColor1,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  "%",
-                                  style: TextStyle(
-                                    color: kBodyTextColor1,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text("Recovered",
-                              style: TextStyle(
-                              color: kBodyTextColor2,
-                              fontSize: 12.0,
-                            ),
-                            ),
-                          ],
+                        CasesPercentage(
+                          width: provider.countries[157].percentageRecovered * 3,
+                          text1: decimalOne.format(provider.countries[157].percentageRecovered),
+                          text2: "Recovered",
+                          color: Colors.blueAccent,
+                          radius: BorderRadius.only(
+                            topRight: Radius.circular(45),
+                            bottomRight: Radius.circular(45),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 50,
                   ),
                   Container(
                     child: Row(
@@ -227,65 +169,32 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         MaskHugasIwas(
-                          icon: FaIcon(FontAwesomeIcons.headSideMask,
-                              color: Colors.white),
-                          title1: Text(
-                            "WEAR",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          title2: Text(
-                            "MASK",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          color: kAppBarColor.withOpacity(0.9),
+                          icon: FontAwesomeIcons.headSideMask,
+                          iconColor: Colors.white,
+                          textColor: Colors.white,
+                          bgColor: kAppBarColor.withOpacity(0.9),
+                          title1: "WEAR",
+                          title2: "MASK",
                           radius: BorderRadius.only(
                             topLeft: Radius.circular(5.0),
                             bottomLeft: Radius.circular(5.0),
                           ),
                         ),
                         MaskHugasIwas(
-                          icon: FaIcon(FontAwesomeIcons.handsWash,
-                              color: Colors.black),
-                          title1: Text(
-                            "WASH",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          title2: Text(
-                            "HANDS",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          color: Colors.black.withOpacity(0.04),
+                          icon: FontAwesomeIcons.handsWash,
+                          iconColor: Colors.black,
+                          textColor: Colors.black,
+                          bgColor: Colors.black.withOpacity(0.04),
+                          title1: "WASH",
+                          title2: "HANDS",
                         ),
                         MaskHugasIwas(
-                          icon: FaIcon(FontAwesomeIcons.peopleArrows,
-                              color: Colors.white),
-                          title1: Text(
-                            "KEEP",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          title2: Text(
-                            "DISTANCE",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          color: Color(0xFFCE2317).withOpacity(0.9),
+                          icon: FontAwesomeIcons.peopleArrows,
+                          iconColor: Colors.white,
+                          textColor: Colors.white,
+                          bgColor: Color(0xFFCE2317).withOpacity(0.9),
+                          title1: "KEEP",
+                          title2: "DISTANCE",
                           radius: BorderRadius.only(
                             topRight: Radius.circular(5.0),
                             bottomRight: Radius.circular(5.0),

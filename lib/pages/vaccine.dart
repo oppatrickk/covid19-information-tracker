@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:covid19_information_center/constant.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:preload_page_view/preload_page_view.dart';
 
 // Pages
 

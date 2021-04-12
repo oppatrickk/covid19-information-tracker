@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:covid19_information_center/constant.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -10,24 +9,39 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:covid19_information_center/widgets/active_recovered_death.dart';
 
 // Database
-import 'package:covid19_information_center/database/initialize_data.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_service.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_model.dart';
-import 'package:covid19_information_center/database/diseasesh/diseasesh_provider.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
+import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
+import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
+
 
 class Nationwide extends StatefulWidget {
+
   @override
   _NationwideState createState() => _NationwideState();
 }
 
 class _NationwideState extends State<Nationwide> {
 
-  var formatter1 = NumberFormat('#,###,###');
-  var formatter2 = NumberFormat('#,###,###.00');
+  var decimalOne = NumberFormat('#,###,###.0');
+  var decimalTwo = NumberFormat('#,###,###.00');
+  var numbers = NumberFormat('#,###,###');
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<FetchDataProvider>(context);
+
+    final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
+    final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
+
+    var provider;
+
+    if (worldometer.countries[157].todayCases == 0)
+    {
+      provider = Provider.of<FetchBackupDataProvider>(context);
+    }
+    else
+    {
+      provider = Provider.of<FetchWorldometerDataProvider>(context);
+    }
 
     return Container(
       color: kAppBarColor,
@@ -86,7 +100,7 @@ class _NationwideState extends State<Nationwide> {
                                     ),
                                 ),
                                 Text(
-                                  formatter1.format(provider.randomJson[157].cases),
+                                  numbers.format(provider.countries[157].cases),
                                   style: TextStyle(
                                     color: kBodyTextColor1,
                                     fontSize: 48.0,
@@ -103,15 +117,15 @@ class _NationwideState extends State<Nationwide> {
                                       children: [
                                         Container(
                                           color: Colors.orange,
-                                          width: provider.randomJson[157].percentageActive * 3,
+                                          width: provider.countries[157].percentageActive * 3,
                                         ),
                                         Container(
                                           color: Colors.green,
-                                          width: provider.randomJson[157].percentageRecovered * 3,
+                                          width: provider.countries[157].percentageRecovered * 3,
                                         ),
                                         Container(
                                           color: Colors.red,
-                                          width: provider.randomJson[157].percentageDeaths * 3,
+                                          width: provider.countries[157].percentageDeaths * 3,
                                         ),
                                       ],
                                     ),
@@ -139,7 +153,7 @@ class _NationwideState extends State<Nationwide> {
                                       children: [
                                         ActiveRecoveredDeath(
                                           icon: Icon(Icons.radio_button_checked, color: Colors.orange,),
-                                          number: Text(formatter1.format(provider.randomJson[157].active),
+                                          number: Text(numbers.format(provider.countries[157].active),
                                             style: TextStyle(
                                               color: kBodyTextColor1,
                                               fontSize: 20.0,
@@ -153,7 +167,7 @@ class _NationwideState extends State<Nationwide> {
                                         ),
                                         ActiveRecoveredDeath(
                                           icon: Icon(Icons.radio_button_checked, color: Colors.green,),
-                                            number: Text(formatter1.format(provider.randomJson[157].recovered),
+                                            number: Text(numbers.format(provider.countries[157].recovered),
                                               style: TextStyle(
                                                 color: kBodyTextColor1,
                                                 fontSize: 20.0,
@@ -167,7 +181,7 @@ class _NationwideState extends State<Nationwide> {
                                         ),
                                         ActiveRecoveredDeath(
                                           icon: Icon(Icons.radio_button_checked, color: Colors.red,),
-                                            number: Text(formatter1.format(provider.randomJson[157].deaths),
+                                            number: Text(numbers.format(provider.countries[157].deaths),
                                               style: TextStyle(
                                                 color: kBodyTextColor1,
                                                 fontSize: 20.0,
@@ -190,7 +204,7 @@ class _NationwideState extends State<Nationwide> {
                                   ),
                                 ),
                                 Text(
-                                  formatter1.format(provider.randomJson[157].todayCases),
+                                  numbers.format(provider.countries[157].todayCases),
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontSize: 36.0,
@@ -214,7 +228,10 @@ class _NationwideState extends State<Nationwide> {
                                       ),
                                     ),
                                   ),
-                                )
+                                ),
+                                Text(
+                                  "1"
+                                ),
                               ],
                             ),
                           ),

@@ -12,8 +12,8 @@ final kShadowColor = Color(0xFFB7B7B7).withOpacity(.16);
 final kActiveShadowColor = Color(0xFF4056C6).withOpacity(.15);
 
 const kAppBarColor = Color(0xFF11249F);
-const kSelectedBottomNavColor = Color(0xFF3383CD);
-const kUnselectedBottomNavColor = Color(0xFF3383CD);
+// Color(0xFF3383CD);
+const kBottomNavColor = Color(0xFF11249F);
 const kSelectedUIColor = Colors.greenAccent;
 const kUnselectedUIColor = Colors.white70;
 
