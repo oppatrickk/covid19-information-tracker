@@ -17,7 +17,7 @@ class CasesPercentage extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 15,
+          height: 8.0,
           width: width,
           decoration: BoxDecoration(
             color: color,

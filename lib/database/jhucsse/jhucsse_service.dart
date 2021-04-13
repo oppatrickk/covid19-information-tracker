@@ -9,7 +9,7 @@ class JhucsseApiService {
 
   Future<List<JhucsseJson>> getApiDataFromJhucsseJson() async {
     try {
-      var res = await http.get(Uri.parse("https://disease.sh/v3/covid-19/historical?lastdays=7"));
+      var res = await http.get(Uri.parse("https://disease.sh/v3/covid-19/historical?lastdays=30"));
       var jsonResponse = convert.jsonDecode(res.body);
       print('JHUCSSE API Successfully Loaded ');
       var itemCount = jsonResponse;

@@ -11,7 +11,7 @@ class BackupApiService {
     try {
       var res = await http.get(Uri.parse("https://disease.sh/v3/covid-19/countries?yesterday=true"));
       var jsonResponse = convert.jsonDecode(res.body);
-      print('Worldometer API Successfuly Loaded');
+      print('Backup Worldometer API Successfuly Loaded');
       var itemCount = jsonResponse;
       itemCount.forEach((e) {
         countriesList.add(WorldometerJson.fromJson(e));

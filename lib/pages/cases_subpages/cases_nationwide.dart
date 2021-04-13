@@ -12,6 +12,8 @@ import 'package:covid19_information_center/widgets/active_recovered_death.dart';
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
 import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
+import 'package:covid19_information_center/database/vaccine/vaccine_provider.dart';
+import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
 
 
 class Nationwide extends StatefulWidget {
@@ -22,26 +24,55 @@ class Nationwide extends StatefulWidget {
 
 class _NationwideState extends State<Nationwide> {
 
+  var today = DateTime.now();
+  var yesterday = DateTime.now().subtract(Duration(days:1));
+  var timeNow = TimeOfDay.now();
+
+  var dateFormat = DateFormat('MMMM dd, yyyy');
   var decimalOne = NumberFormat('#,###,###.0');
   var decimalTwo = NumberFormat('#,###,###.00');
   var numbers = NumberFormat('#,###,###');
+
+  var provider;
+  var date;
+  var dateVaccine;
+
+  var date1 = DateTime.now().subtract(Duration(days:6));
+  var date2 = DateTime.now().subtract(Duration(days:5));
+  var date3 = DateTime.now().subtract(Duration(days:4));
+  var date4 = DateTime.now().subtract(Duration(days:3));
+  var date5 = DateTime.now().subtract(Duration(days:2));
+  var date6 = DateTime.now().subtract(Duration(days:1));
+
+  var dateFormat2 = DateFormat('M/dd/yy');
 
   @override
   Widget build(BuildContext context) {
 
     final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
     final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
+    final vaccine = Provider.of<FetchVaccineDataProvider>(context);
+    final firebase = Provider.of<FetchFirebaseDataProvider>(context);
 
-    var provider;
+    double dateNow = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
 
-    if (worldometer.countries[157].todayCases == 0)
-    {
+    if (worldometer.countries[157].todayCases == 0) {
       provider = Provider.of<FetchBackupDataProvider>(context);
     }
-    else
-    {
+    else {
       provider = Provider.of<FetchWorldometerDataProvider>(context);
     }
+
+    if (worldometer.countries[157].todayCases != 0 && dateNow >= 16.0) {
+      date = today;
+      dateVaccine = yesterday;
+    }
+    else {
+      date = yesterday;
+      dateVaccine = yesterday.subtract(Duration(days:1));
+    }
+
+    var day1 = numbers.format(jhucsse.historical[208].day1);
 
     return Container(
       color: kAppBarColor,
@@ -63,7 +94,7 @@ class _NationwideState extends State<Nationwide> {
         body: Stack(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height - 82.0,
+              height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               color: (Colors.transparent),
             ),
@@ -87,23 +118,45 @@ class _NationwideState extends State<Nationwide> {
                       children: [
                         Padding(
                           padding:
-                              const EdgeInsets.only(left: 30.0, right: 30.0),
+                              const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 50.0),
                           child: Container(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 10.0),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "As of ${dateFormat.format(date)}",
+                                      style: TextStyle(
+                                        color: kBodyTextColor1,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 15.0),
+                                  child: Container(
+                                    height: 2.0,
+                                    color: Colors.black.withOpacity(0.1),
+                                  ),
+                                ),
                                 Text(
                                     "Total Confirmed Cases",
                                     style: TextStyle(
                                       color: kBodyTextColor2,
+                                      fontSize: 14.0,
                                     ),
                                 ),
                                 Text(
                                   numbers.format(provider.countries[157].cases),
                                   style: TextStyle(
                                     color: kBodyTextColor1,
-                                    fontSize: 48.0,
+                                    fontSize: 42.0,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -215,7 +268,9 @@ class _NationwideState extends State<Nationwide> {
                                   aspectRatio: 2.0,
                                   child: BarChart(
                                     BarChartData(
-                                      barGroups: getBarGroups(),
+                                      barGroups: getBarGroups(
+
+                                      ),
                                       borderData: FlBorderData(show: false),
                                       titlesData: FlTitlesData(
                                         leftTitles: SideTitles(
@@ -229,8 +284,39 @@ class _NationwideState extends State<Nationwide> {
                                     ),
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 25.0),
+                                  child: Text(
+                                    "Total Vaccine Administered",
+                                    style: TextStyle(
+                                      color: kBodyTextColor2,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                ),
                                 Text(
-                                  "1"
+                                  "(As of ${dateFormat.format(dateVaccine)})",
+                                  style: TextStyle(
+                                    color: kBodyTextColor2,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                                Text(
+                                  numbers.format(vaccine.vaccine[122].administered),
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 36.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  "${dateFormat.format(date3)}: ${numbers.format(jhucsse.historical[208].day3)}",
+                                ),
+                                Text(
+                                  "${dateFormat.format(date4)}: ${numbers.format(jhucsse.historical[208].day4)}",
+                                ),
+                                Text(
+                                  firebase.firebase[0].date,
                                 ),
                               ],
                             ),
@@ -250,7 +336,8 @@ class _NationwideState extends State<Nationwide> {
 }
 
 getBarGroups() {
-  List<double> barChartDatas = [11020, 8344, 9363, 6400, 9179, 12206, 12674];
+
+  List<double> barChartDatas = [11020, 8344, 9363, 6400, 9179, 12206, 11111];
   List<BarChartGroupData> barChartGroups = [];
   barChartDatas.asMap().forEach(
         (i, value) => barChartGroups.add(
@@ -261,7 +348,7 @@ getBarGroups() {
             y: value,
             //This is not the proper way, this is just for demo
             colors: [Colors.red],
-            width: 16,
+            width: 12,
           )
         ],
       ),
