@@ -10,12 +10,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:covid19_information_center/database/worldometer/worldometer_service.dart';
 import 'package:covid19_information_center/database/worldometer/backup_service.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_service.dart';
+import 'package:covid19_information_center/database/vaccine/vaccine_service.dart';
 
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
 import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
-
-import 'package:covid19_information_center/database/firebase/firebase_service.dart';
+import 'package:covid19_information_center/database/vaccine/vaccine_provider.dart';
+import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
 
 // Widgets
 import 'package:covid19_information_center/widgets/navigation/main_app_bar.dart';
@@ -32,7 +33,7 @@ class _LoadingDataState extends State<LoadingData> {
   BackupApiService backupApiService = BackupApiService();
   JhucsseApiService jhucsseApiService = JhucsseApiService();
 
-
+/*
   Query _query;
 
   @override
@@ -46,17 +47,21 @@ class _LoadingDataState extends State<LoadingData> {
     super.initState();
   }
 
+ */
+
   @override
   Widget build(BuildContext context) {
     Provider.of<FetchWorldometerDataProvider>(context);
     Provider.of<FetchBackupDataProvider>(context);
     Provider.of<FetchJhucsseDataProvider>(context);
+    Provider.of<FetchVaccineDataProvider>(context);
+    Provider.of<FetchFirebaseDataProvider>(context);
 
     final Future<FirebaseApp> _future = Firebase.initializeApp();
     final provider = Provider.of<FetchWorldometerDataProvider>(context);
 
     return Scaffold(
-        body: provider.loading == true && _query != null
+        body: provider.loading == true
             ? Container(
             padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2 - 100),
             child: Center(

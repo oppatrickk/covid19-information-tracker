@@ -8,7 +8,6 @@ import 'package:covid19_information_center/constant.dart';
 import 'package:covid19_information_center/pages/home.dart';
 import 'package:covid19_information_center/pages/cases.dart';
 import 'package:covid19_information_center/pages/information.dart';
-import 'package:covid19_information_center/pages/vaccine.dart';
 
 class MainAppBar extends StatefulWidget {
 
@@ -23,19 +22,17 @@ class _MainAppBarState extends State<MainAppBar> {
   Curve animationCurve = Curves.linear;
 
   final List<bool> visibilityList = [
-    false, true, true, true
+    false, true, true
   ];
 
   final List<String> titleList = [
     "",
     "Case Summary",
-    "Vaccine Progress",
     "Information"
   ];
   final List<Icon> iconList = [
     Icon(FontAwesomeIcons.home, color: Colors.white),
     Icon(FontAwesomeIcons.virus, color: Colors.white),
-    Icon(FontAwesomeIcons.syringe, color: Colors.white),
     Icon(FontAwesomeIcons.infoCircle, color: Colors.white),
   ];
 
@@ -77,7 +74,6 @@ class _MainAppBarState extends State<MainAppBar> {
         children: [
           Home(),
           CaseSum(),
-          Vaccine(),
           Information(),
         ],
       ),
@@ -98,10 +94,6 @@ class _MainAppBarState extends State<MainAppBar> {
           BottomNavigationBarItem(
             label: 'Cases',
             icon: Icon(FontAwesomeIcons.virus),
-          ),
-          BottomNavigationBarItem(
-            label: 'Vaccine',
-            icon: Icon(FontAwesomeIcons.syringe),
           ),
           BottomNavigationBarItem(
             label: 'Information',

@@ -12,6 +12,9 @@ import 'package:covid19_information_center/pages/cases_subpages/cases_nationwide
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
 import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
+import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
+import 'package:covid19_information_center/database/initialize_data.dart';
+
 
 // Widgets
 import 'package:covid19_information_center/widgets/cases/case_card.dart';
@@ -26,15 +29,15 @@ class _CaseSumState extends State<CaseSum> {
 
   var today = DateTime.now();
   var yesterday = DateTime.now().subtract(Duration(days:1));
+  var timeNow = TimeOfDay.now();
 
   var dateFormat = DateFormat('MMMM dd, yyyy');
-
   var decimalOne = NumberFormat('#,###,###.0');
   var decimalTwo = NumberFormat('#,###,###.00');
   var numbers = NumberFormat('#,###,###');
 
-  var timeNow = TimeOfDay.now();
-  var timeReset = TimeOfDay(hour: 0, minute: 00);
+  var provider;
+  var date;
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +45,7 @@ class _CaseSumState extends State<CaseSum> {
     final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
     final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
 
-    var provider;
-    var date;
-    var time;
-
-    double _timeNow = timeReset.hour.toDouble() + (timeReset.minute.toDouble() / 60);
-    double _timeReset = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
+    double dateNow = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
 
     if (worldometer.countries[157].todayCases == 0) {
       provider = Provider.of<FetchBackupDataProvider>(context);
@@ -56,21 +54,21 @@ class _CaseSumState extends State<CaseSum> {
       provider = Provider.of<FetchWorldometerDataProvider>(context);
     }
 
-    if (worldometer.countries[157].todayCases == 0 && _timeNow >= _timeReset) {
-        date = yesterday;
-    }
-    else if (worldometer.countries[157].todayCases != 0 && _timeNow >= 4.0) {
+    if (worldometer.countries[157].todayCases != 0 && dateNow >= 16.0) {
         date = today;
     }
     else {
-      date = yesterday;
+        date = yesterday;
     }
 
-
     Future <void> _onRefresh() async {
-      await Future.delayed(Duration(milliseconds: 1000));
+      await Future.delayed(Duration(milliseconds: 3000));
       Provider.of<FetchWorldometerDataProvider>(context, listen: false).initialize();
       Provider.of<FetchJhucsseDataProvider>(context, listen: false).initialize();
+      Provider.of<FetchFirebaseDataProvider>(context, listen: false).initialize();
+
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LoadingData()),);
     }
 
     return Container(
@@ -135,7 +133,7 @@ class _CaseSumState extends State<CaseSum> {
                             ),
                             CaseCard(
                               title: "Bicol Region Cases",
-                              date: "As of April 09, 2021 | 11 PM",
+                              date: "As of | 11 PM",
                               totalCases: numbers.format(provider.countries[157].cases),
                               newCases: numbers.format(provider.countries[157].todayCases),
                               page: Region(),

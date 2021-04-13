@@ -21,26 +21,39 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  var today = DateTime.now();
+  var yesterday = DateTime.now().subtract(Duration(days:1));
+  var timeNow = TimeOfDay.now();
+
+  var dateFormat = DateFormat('MMMM dd, yyyy');
+  var decimalOne = NumberFormat('#,###,###.0');
+  var decimalTwo = NumberFormat('#,###,###.00');
+  var numbers = NumberFormat('#,###,###');
+
+  var provider;
+  var date;
+
   @override
   Widget build(BuildContext context) {
-
-    var decimalOne = NumberFormat('#,###,###.0');
-    var decimalTwo = NumberFormat('#,###,###.00');
-    var numbers = NumberFormat('#,###,###');
-
 
     final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
     final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
 
-    var provider;
+    double dateNow = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
 
-    if (worldometer.countries[157].todayCases == 0)
-    {
+    if (worldometer.countries[157].todayCases == 0) {
       provider = Provider.of<FetchBackupDataProvider>(context);
     }
-    else
-    {
+    else {
       provider = Provider.of<FetchWorldometerDataProvider>(context);
+    }
+
+    if (worldometer.countries[157].todayCases != 0 && dateNow >= 16.0) {
+      date = today;
+    }
+    else {
+      date = yesterday;
     }
 
     return Scaffold(
@@ -141,7 +154,7 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CasesPercentage(
-                          width: provider.countries[157].percentageActive * 3,
+                          width: provider.countries[157].percentageActive  * 3,
                           text1: decimalOne.format(provider.countries[157].percentageActive),
                           text2: "Active",
                           color: Colors.greenAccent,
@@ -151,7 +164,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         CasesPercentage(
-                          width: provider.countries[157].percentageRecovered * 3,
+                          width:  provider.countries[157].percentageRecovered * 3,
                           text1: decimalOne.format(provider.countries[157].percentageRecovered),
                           text2: "Recovered",
                           color: Colors.blueAccent,
