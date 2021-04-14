@@ -1,4 +1,4 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
 com/studioprieto/covid19_information_center/BuildConfig.java
  com.studioprieto.covid19_information_center.BuildConfig
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
