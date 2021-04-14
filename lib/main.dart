@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         title: 'COVID-19 Information Center',
         theme: ThemeData(
             fontFamily: "NotoSansJP",
+            visualDensity: VisualDensity.adaptivePlatformDensity,
             textTheme: TextTheme(
               bodyText2: TextStyle(color: kBodyTextColor),
             )),

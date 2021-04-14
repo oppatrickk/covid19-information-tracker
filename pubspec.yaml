@@ -27,6 +27,7 @@ dependencies:
   firebase_database: ^6.1.0
   firebase_core: ^1.0.1
   firebase_auth: ^1.0.3
+  firebase_analytics: ^5.0.11
   http: ^0.13.0
   page_transition: ^1.1.7+6
   intl: ^0.17.0
@@ -35,11 +36,10 @@ dependencies:
   provider: ^5.0.0
   progress_indicators: ^0.1.5
   fl_chart: ^0.35.0
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  url_launcher: ^6.0.3
+  flutter_webview_plugin: ^0.3.11
+  webview_flutter: ^0.3.22+1
 
 dev_dependencies:
   flutter_test:

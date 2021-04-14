@@ -79,12 +79,13 @@ class _MainAppBarState extends State<MainAppBar> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: Colors.white,
         selectedItemColor: kBottomNavColor,
         unselectedItemColor: kBottomNavColor.withOpacity(.3),
         selectedFontSize: 14,
         unselectedFontSize: 14,
         currentIndex: _page,
+        elevation: 0,
         onTap: navigationTapped,
         items: [
           BottomNavigationBarItem(

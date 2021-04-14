@@ -43,7 +43,7 @@ class _CaseSumState extends State<CaseSum> {
   Widget build(BuildContext context) {
 
     final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
-    final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
+    final firebase = Provider.of<FetchFirebaseDataProvider>(context);
 
     double dateNow = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
 
@@ -133,7 +133,7 @@ class _CaseSumState extends State<CaseSum> {
                             ),
                             CaseCard(
                               title: "Bicol Region Cases",
-                              date: "As of | 11 PM",
+                              date: "As of ${firebase.firebase[0].date}",
                               totalCases: numbers.format(provider.countries[157].cases),
                               newCases: numbers.format(provider.countries[157].todayCases),
                               page: Region(),
