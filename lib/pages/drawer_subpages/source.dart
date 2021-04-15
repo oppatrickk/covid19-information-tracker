@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:covid19_information_center/constant.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Widgets
+import 'package:covid19_information_center/widgets/navigation/data_card.dart';
 
 // Database
 
@@ -21,7 +23,7 @@ class _SourceState extends State<Source> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Data Source"),
+          title: Text("Data Sources"),
           backgroundColor: kAppBarColor,
           elevation: 0,
           titleSpacing: 0,
@@ -65,7 +67,90 @@ class _SourceState extends State<Source> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
+                                Row(
+                                  children: [
+                                    FaIcon(FontAwesomeIcons.infoCircle, size: 20.0),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10.0),
+                                      child: Text(
+                                        "Information",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: kBodyTextColor1,
+                                          fontSize: 20.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                DataCard(
+                                  title1: "World Health Organization ",
+                                  title2: "(WHO)",
+                                  text: "       All information on the information page are retrieved from the website of World Health Organization as of April 2021",
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30.0),
+                                  child: Row(
+                                    children: [
+                                      FaIcon(FontAwesomeIcons.viruses, size: 20.0),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 10.0),
+                                        child: Text(
+                                          "Nationwide Cases",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: kBodyTextColor1,
+                                            fontSize: 20.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                DataCard(
+                                  title1: "Open Disease Data ",
+                                  title2: "(disease.sh)",
+                                  text: "       This is the API used to automatically retrieve the data from the following sources below.",
+                                ),
+                                DataCard(
+                                  title1: "Worldometer ",
+                                  title2: "",
+                                  text: "       This is the main source of data on the COVID-19 cases in the Philippines.",
+                                ),
+                                DataCard(
+                                  title1: "John Hopkins University ",
+                                  title2: "(JHUCSSE)",
+                                  text: "       This is the secondary source for additional data on the past COVID-19 cases in the Philippines.",
+                                ),
+                                DataCard(
+                                  title1: "OurWorldInData ",
+                                  title2: "",
+                                  text: "       All data on total doses of vaccine administered in the Philippines are retrieved from OurWorldInData. ",
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30.0),
+                                  child: Row(
+                                    children: [
+                                      FaIcon(FontAwesomeIcons.virus, size: 20.0),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 10.0),
+                                        child: Text(
+                                          "Bicol Region Cases",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: kBodyTextColor1,
+                                            fontSize: 20.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                DataCard(
+                                  title1: "Department of Health ",
+                                  title2: "(CHD - Bicol)",
+                                  text: "       All data on cases from Bicol region are manually retrieved from the facebook page of Department of Health - Bicol Center for Health Development.",
+                                ),
                               ],
                             ),
                           ),

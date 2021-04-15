@@ -71,7 +71,7 @@ class BaseDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text("Data Source"),
+            title: Text("Data Sources"),
             leading: FaIcon(FontAwesomeIcons.solidFolderOpen, size: 25.0),
             onTap: () {
               Navigator.pop(context);

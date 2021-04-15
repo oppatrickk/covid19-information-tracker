@@ -22,7 +22,7 @@ class WorldometerJson {
   int population;
   String country;
 
-  num percentageActive;
+  double percentageActive;
   num percentageRecovered;
   num percentageDeaths;
 

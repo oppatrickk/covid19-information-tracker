@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:covid19_information_center/constant.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Widgets
 
@@ -65,7 +66,39 @@ class _SettingsState extends State<Settings> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      Icon(Icons.warning_amber_outlined, size: 50.0),
+                                      Center(
+                                        child: Text(
+                                          "Sorry, this page is still \nunder construction",
+                                          style: TextStyle(
+                                            fontSize: 28.0,
+                                            color: kBodyTextColor1,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 30.0, bottom: 15.0),
+                                        child: Text(
+                                            "New Features coming soon: ",
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: kBodyTextColor1,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Text(
+                                    "- Dark Mode / Dim Mode"
+                                ),
+                                Text(
+                                    "- Push Notifications (For new cases)"
+                                ),
                               ],
                             ),
                           ),
