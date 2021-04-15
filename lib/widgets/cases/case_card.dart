@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:covid19_information_center/constant.dart';
 
 class CaseCard extends StatelessWidget {
 

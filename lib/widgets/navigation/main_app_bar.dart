@@ -30,6 +30,7 @@ class _MainAppBarState extends State<MainAppBar> {
     "Case Summary",
     "Information"
   ];
+
   final List<Icon> iconList = [
     Icon(FontAwesomeIcons.home, color: Colors.white),
     Icon(FontAwesomeIcons.virus, color: Colors.white),
@@ -45,7 +46,7 @@ class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawerEdgeDragWidth: 50,
+      drawerEdgeDragWidth: 25,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,

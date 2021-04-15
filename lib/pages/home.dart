@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Pages
+import 'package:covid19_information_center/pages/information.dart';
 
 // Widgets
 import 'package:covid19_information_center/widgets/home/cases_percentage.dart';
 import 'package:covid19_information_center/widgets/home/mask_hugas_iwas.dart';
+import 'package:covid19_information_center/widgets/home/random_facts.dart';
 
 // Database
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
@@ -18,6 +20,7 @@ import 'package:covid19_information_center/database/firebase/firebase_provider.d
 import 'package:covid19_information_center/database/initialize_data.dart';
 
 class Home extends StatefulWidget {
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -40,7 +43,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
 
     final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
-    final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
 
     double dateNow = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
 
@@ -51,7 +53,7 @@ class _HomeState extends State<Home> {
       provider = Provider.of<FetchWorldometerDataProvider>(context);
     }
 
-    if (worldometer.countries[157].todayCases != 0 && dateNow >= 16.0) {
+    if (worldometer.countries[157].todayCases != 0 && dateNow >= 7.0) {
       date = today;
     }
     else {
@@ -121,27 +123,22 @@ class _HomeState extends State<Home> {
                   itemCount: 1,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 30.0, left: 30, right: 30.0),
+                      padding: const EdgeInsets.only(top: 30.0, left: 30, right: 30.0, bottom: 30.0),
                       child: Column(
                         children: [
-                          Container(
-                            color: Colors.white,
-                            child: Text(
-                              "Total Confirmed Cases",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: kBodyTextColor2,
-                              ),
+                          Text(
+                            "Total Confirmed Cases",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: kBodyTextColor2,
                             ),
                           ),
-                          Container(
-                            child: Text(
-                              numbers.format(provider.countries[157].cases),
-                              style: TextStyle(
-                                fontSize: 64,
-                                fontWeight: FontWeight.bold,
-                                color: kBodyTextColor1,
-                              ),
+                          Text(
+                            numbers.format(provider.countries[157].cases),
+                            style: TextStyle(
+                              fontSize: 64,
+                              fontWeight: FontWeight.bold,
+                              color: kBodyTextColor1,
                             ),
                           ),
                           Padding(
@@ -177,7 +174,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 20.0, bottom: 50.0),
+                            padding: const EdgeInsets.only(top: 20.0, bottom: 30.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -206,6 +203,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Container(
+                            padding: EdgeInsets.only(bottom: 30.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -245,6 +243,28 @@ class _HomeState extends State<Home> {
                               ],
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15.0),
+                            child: Row(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.infoCircle
+                                ),
+                                SizedBox(
+                                  width: 10.0,
+                                ),
+                                Text(
+                                  "Information",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                    color: kBodyTextColor1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          RandomFacts(),
                         ],
                       ),
                     );

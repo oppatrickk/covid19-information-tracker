@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:covid19_information_center/constant.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -54,7 +53,7 @@ class _CaseSumState extends State<CaseSum> {
       provider = Provider.of<FetchWorldometerDataProvider>(context);
     }
 
-    if (worldometer.countries[157].todayCases != 0 && dateNow >= 16.0) {
+    if (worldometer.countries[157].todayCases != 0 && dateNow >= 7.0) {
         date = today;
     }
     else {
@@ -133,9 +132,9 @@ class _CaseSumState extends State<CaseSum> {
                             ),
                             CaseCard(
                               title: "Bicol Region Cases",
-                              date: "As of ${firebase.firebase[0].date}",
-                              totalCases: numbers.format(provider.countries[157].cases),
-                              newCases: numbers.format(provider.countries[157].todayCases),
+                              date: "As of ${firebase.bicol[0].date}",
+                              totalCases: numbers.format(firebase.bicol[0].caseTotal),
+                              newCases: numbers.format(firebase.bicol[0].caseToday),
                               page: Region(),
                             ),
                           ],

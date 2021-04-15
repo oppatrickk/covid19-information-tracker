@@ -6,7 +6,7 @@ import 'package:covid19_information_center/database/firebase/firebase_model.dart
 import 'package:covid19_information_center/database/firebase/firebase_service.dart';
 
 class FetchFirebaseDataProvider with ChangeNotifier {
-  List<FirebaseJson> firebase = [];
+  List<FirebaseJson> bicol = [];
   bool loading = false;
   FirebaseApiService firebaseApiService = FirebaseApiService();
 
@@ -40,7 +40,7 @@ class FetchFirebaseDataProvider with ChangeNotifier {
     print('JHUCSSE: Data Retrieved');
 
     loading = true;
-    firebase = await firebaseApiService.getApiDataFromFirebaseJson();
+    bicol = await firebaseApiService.getApiDataFromFirebaseJson();
     loading = false;
     notifyListeners();
   }
