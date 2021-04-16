@@ -30,10 +30,9 @@ class _BarChartGraphState extends State<BarChartGraph> {
       charts.Series(
           id: "Financial",
           data: widget.data,
-          domainFn: (BarChartModel series, _) => series.year,
-          measureFn: (BarChartModel series, _) => series.financial,
+          domainFn: (BarChartModel series, _) => series.day,
+          measureFn: (BarChartModel series, _) => series.cases,
           colorFn: (BarChartModel series, _) => series.color),
-          
     ];
 
     return _buildFinancialList(series);

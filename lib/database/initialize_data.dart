@@ -5,14 +5,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Database
 import 'package:covid19_information_center/database/worldometer/worldometer_service.dart';
-import 'package:covid19_information_center/database/worldometer/backup_service.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_backup_service.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_service.dart';
+import 'package:covid19_information_center/database/jhucsse/jhucsse_backup_service.dart';
 import 'package:covid19_information_center/database/vaccine/vaccine_service.dart';
 import 'package:covid19_information_center/database/firebase/firebase_service.dart';
 
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
+import 'package:covid19_information_center/database/jhucsse/jhucsse_backup_provider.dart';
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
-import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
 import 'package:covid19_information_center/database/vaccine/vaccine_provider.dart';
 import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
 
@@ -28,16 +30,18 @@ class LoadingData extends StatefulWidget {
 
 class _LoadingDataState extends State<LoadingData> {
   WorldometerApiService worldometerApiService = WorldometerApiService();
-  BackupApiService backupApiService = BackupApiService();
+  WorldometerBackupApiService backupApiService = WorldometerBackupApiService();
   JhucsseApiService jhucsseApiService = JhucsseApiService();
+  JhucsseBackupApiService jhucsseBackupApiService = JhucsseBackupApiService();
   VaccineApiService vaccineeApiService = VaccineApiService();
   FirebaseApiService firebaseApiService = FirebaseApiService();
 
   @override
   Widget build(BuildContext context) {
     Provider.of<FetchWorldometerDataProvider>(context);
-    Provider.of<FetchBackupDataProvider>(context);
+    Provider.of<FetchWorldometerBackupDataProvider>(context);
     Provider.of<FetchJhucsseDataProvider>(context);
+    Provider.of<FetchJhucsseBackupDataProvider>(context);
     Provider.of<FetchVaccineDataProvider>(context);
     Provider.of<FetchFirebaseDataProvider>(context);
 
