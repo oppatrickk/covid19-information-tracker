@@ -8,11 +8,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/foundation.dart';
 
 // Widgets
-import 'package:covid19_information_center/widgets/active_recovered_death.dart';
+import 'package:covid19_information_center/widgets/cases/nationwide/active_recovered_death.dart';
 
 // Database
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
-import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 import 'package:covid19_information_center/database/vaccine/vaccine_provider.dart';
 import 'package:covid19_information_center/database/firebase/firebase_provider.dart';

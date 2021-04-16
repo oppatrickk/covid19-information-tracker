@@ -9,7 +9,7 @@ import 'package:covid19_information_center/pages/cases_subpages/cases_nationwide
 
 // Database
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
-import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
 import 'package:covid19_information_center/database/initialize_data.dart';
@@ -47,7 +47,7 @@ class _CaseSumState extends State<CaseSum> {
     double dateNow = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
 
     if (worldometer.countries[157].todayCases == 0) {
-      provider = Provider.of<FetchBackupDataProvider>(context);
+      provider = Provider.of<FetchWorldometerBackupDataProvider>(context);
     }
     else {
       provider = Provider.of<FetchWorldometerDataProvider>(context);

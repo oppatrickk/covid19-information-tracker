@@ -14,7 +14,7 @@ import 'package:covid19_information_center/widgets/home/random_facts.dart';
 
 // Database
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
-import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
 import 'package:covid19_information_center/database/initialize_data.dart';
@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
     double dateNow = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
 
     if (worldometer.countries[157].todayCases == 0) {
-      provider = Provider.of<FetchBackupDataProvider>(context);
+      provider = Provider.of<FetchWorldometerBackupDataProvider>(context);
     }
     else {
       provider = Provider.of<FetchWorldometerDataProvider>(context);

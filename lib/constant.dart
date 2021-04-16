@@ -20,6 +20,10 @@ const kUnselectedUIColor = Colors.white70;
 const kBodyTextColor1 = Colors.black;
 const kBodyTextColor2 = Colors.black54;
 
+const kPieColor1 = Color(0xFFffc400);
+const kPieColor2 = Color(0xFF00e676);
+const kPieColor3 = Color(0xFFff5722);
+
 // Text Style
 const kHeadingTextStyle = TextStyle(
   fontSize: 22,

@@ -5,8 +5,9 @@ import 'package:provider/provider.dart';
 // Database
 import 'package:covid19_information_center/database/initialize_data.dart';
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
-import 'package:covid19_information_center/database/worldometer/backup_provider.dart';
+import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
+import 'package:covid19_information_center/database/jhucsse/jhucsse_backup_provider.dart';
 import 'package:covid19_information_center/database/vaccine/vaccine_provider.dart';
 import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,10 +25,12 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<FetchWorldometerDataProvider>(
             create: (_) => FetchWorldometerDataProvider()),
-        ChangeNotifierProvider<FetchBackupDataProvider>(
-            create: (_) => FetchBackupDataProvider()),
+        ChangeNotifierProvider<FetchWorldometerBackupDataProvider>(
+            create: (_) => FetchWorldometerBackupDataProvider()),
         ChangeNotifierProvider<FetchJhucsseDataProvider>(
             create: (_) => FetchJhucsseDataProvider()),
+        ChangeNotifierProvider<FetchJhucsseBackupDataProvider>(
+            create: (_) => FetchJhucsseBackupDataProvider()),
         ChangeNotifierProvider<FetchVaccineDataProvider>(
             create: (_) => FetchVaccineDataProvider()),
         ChangeNotifierProvider<FetchFirebaseDataProvider>(
@@ -38,6 +41,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             fontFamily: "NotoSansJP",
             visualDensity: VisualDensity.adaptivePlatformDensity,
+            highlightColor: Color(0xFF3383CD),
             textTheme: TextTheme(
               bodyText2: TextStyle(color: kBodyTextColor),
             )),
