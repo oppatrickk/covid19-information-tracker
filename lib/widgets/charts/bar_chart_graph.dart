@@ -51,7 +51,7 @@ class _BarChartGraphState extends State<BarChartGraph> {
             itemCount: 1,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                height: MediaQuery.of(context).size.height / 3.5,
+                height: MediaQuery.of(context).size.height / 2.5,
                 padding: EdgeInsets.all(10),
                 child: Column(
                   children: [

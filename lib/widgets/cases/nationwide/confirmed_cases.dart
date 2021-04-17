@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:covid19_information_center/constant.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
-
-// Widgets
-import 'package:covid19_information_center/widgets/cases/nationwide/active_recovered_death.dart';
-import 'package:covid19_information_center/widgets/charts/bar_chart_model.dart';
-import 'package:covid19_information_center/widgets/charts/bar_chart_graph.dart';
 
 // Database
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
 import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_backup_provider.dart';
-import 'package:covid19_information_center/database/vaccine/vaccine_provider.dart';
 
 class ConfirmedCases extends StatefulWidget {
   @override
@@ -55,8 +46,8 @@ class _ConfirmedCasesState extends State<ConfirmedCases> {
   var dateFormat2 = DateFormat('M/dd/yy');
 
   List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
+    Colors.orangeAccent,
+    Colors.redAccent,
   ];
 
   @override
@@ -140,7 +131,7 @@ class _ConfirmedCasesState extends State<ConfirmedCases> {
 
     return SizedBox(
       width: MediaQuery.of(context).size.width / 1.2,
-      height: MediaQuery.of(context).size.height / 4.5,
+      height: MediaQuery.of(context).size.height / 4,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: LineChart(

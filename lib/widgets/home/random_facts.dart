@@ -38,7 +38,8 @@ class _RandomFactsState extends State<RandomFacts> {
   Widget build(BuildContext context) {
     var currentNum = rng.nextInt(5);
 
-    return Container(
+    return AnimatedContainer(
+      duration: Duration (seconds: 3),
       padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -77,10 +78,10 @@ class _RandomFactsState extends State<RandomFacts> {
             alignment: Alignment.topRight,
             child: TextButton(
               onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Facts()));
+                setState(() { currentNum = rng.nextInt(5); });
               },
               child: Text(
-                "Read More",
+                "Read Another",
                 style: TextStyle(
                   fontSize: 12.0,
                 ),

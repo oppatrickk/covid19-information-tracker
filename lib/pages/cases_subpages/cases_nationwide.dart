@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:covid19_information_center/constant.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/gestures.dart';
@@ -20,7 +19,8 @@ import 'package:covid19_information_center/database/worldometer/worldometer_prov
 import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_backup_provider.dart';
-import 'package:covid19_information_center/database/vaccine/vaccine_provider.dart';
+import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
+import 'package:covid19_information_center/database/initialize_data.dart';
 
 class Nationwide extends StatefulWidget {
   @override
@@ -55,11 +55,12 @@ class _NationwideState extends State<Nationwide> {
 
   int touchedIndex;
 
+
+
   @override
   Widget build(BuildContext context) {
     final worldometer = Provider.of<FetchWorldometerDataProvider>(context);
     final jhucsse = Provider.of<FetchJhucsseDataProvider>(context);
-    final vaccine = Provider.of<FetchVaccineDataProvider>(context);
 
     double dateNow = timeNow.hour.toDouble() + (timeNow.minute.toDouble() / 60);
 
@@ -91,7 +92,7 @@ class _NationwideState extends State<Nationwide> {
       date7 = DateTime.now().subtract(Duration(days: 6));
     }
 
-    if (worldometer.countries[157].todayCases != 0 && dateNow >= 7.0) {
+    if (worldometer.countries[157].todayCases != 0 && dateNow >=16.0) {
       date = today;
       dateVaccine = yesterday;
     } else {
@@ -151,6 +152,18 @@ class _NationwideState extends State<Nationwide> {
       ),
     ];
 
+    Future <void> _onRefresh() async {
+      await Future.delayed(Duration(milliseconds: 3000));
+      Provider.of<FetchWorldometerDataProvider>(context, listen: false).initialize();
+      Provider.of<FetchWorldometerBackupDataProvider>(context, listen: false).initialize();
+      Provider.of<FetchJhucsseDataProvider>(context, listen: false).initialize();
+      Provider.of<FetchJhucsseBackupDataProvider>(context, listen: false).initialize();
+      Provider.of<FetchFirebaseDataProvider>(context, listen: false).initialize();
+
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LoadingData()),);
+    }
+
     return Container(
       color: kAppBarColor,
       child: Scaffold(
@@ -171,14 +184,8 @@ class _NationwideState extends State<Nationwide> {
         body: Stack(
           children: [
             Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
               color: (Colors.transparent),
             ),
             Positioned(
@@ -192,25 +199,23 @@ class _NationwideState extends State<Nationwide> {
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 35.0),
+                  padding: const EdgeInsets.only(top: 0.0),
                   child: RefreshIndicator(
-                    onRefresh: () async {
-                      // Add Refresh here
-                    },
+                      onRefresh: () => _onRefresh(),
                     child: Scrollbar(
                       radius: Radius.circular(20),
                       child: ListView(
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 30.0, right: 30.0, bottom: 50.0),
+                                top: 40.0, left: 30.0, right: 30.0, bottom: 50.0),
                             child: Container(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 25.0),
+                                    padding: const EdgeInsets.only(bottom: 30.0),
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Text(
@@ -234,7 +239,7 @@ class _NationwideState extends State<Nationwide> {
                                     numbers.format(providerOne.countries[157].todayCases),
                                     style: TextStyle(
                                       color: Colors.red,
-                                      fontSize: 42.0,
+                                      fontSize: 48.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -253,6 +258,7 @@ class _NationwideState extends State<Nationwide> {
                                           RecoveriesDeaths(
                                             number: numbers.format(providerOne.countries[157].todayRecovered),
                                             title: "Recoveries",
+                                            color: Colors.redAccent.withOpacity(0.15),
                                           ),
                                           SizedBox(
                                             width: 25.0,
@@ -260,13 +266,14 @@ class _NationwideState extends State<Nationwide> {
                                           RecoveriesDeaths(
                                             number: numbers.format(providerOne.countries[157].todayDeaths),
                                             title: "Deaths",
+                                            color: Colors.redAccent.withOpacity(0.15),
                                           ),
                                         ],
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 75.0),
+                                    padding: const EdgeInsets.only(top: 60.0),
                                     child: Text(
                                       "Total Confirmed Cases",
                                       style: TextStyle(
@@ -483,45 +490,20 @@ class _NationwideState extends State<Nationwide> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 25.0),
                                     child: Text(
-                                      "Total Vaccine Administered (per doses)",
+                                      "Total Samples Tested",
                                       style: TextStyle(
                                         color: kBodyTextColor2,
                                         fontSize: 14.0,
                                       ),
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "${numbers.format(
-                                            vaccine.vaccine[122].administered)}",
-                                        style: TextStyle(
-                                          color: kBodyTextColor1,
-                                          fontSize: 42.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        "*",
-                                        style: TextStyle(
-                                          color:
-                                          Colors.redAccent.withOpacity(0.8),
-                                          fontSize: 36.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                   Text(
-                                    "* As of ${dateFormat.format(dateVaccine)}",
+                                    "${numbers.format(providerOne.countries[157].tests)}",
                                     style: TextStyle(
-                                      color: Colors.redAccent.withOpacity(0.8),
-                                      fontSize: 14.0,
+                                      color: kBodyTextColor1,
+                                      fontSize: 42.0,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  ),
-                                  Text(
-                                      numbers.format(
-                                          providerOne.countries[157].population)
                                   ),
                                 ],
                               ),

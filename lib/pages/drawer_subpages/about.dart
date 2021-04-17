@@ -50,157 +50,131 @@ class _AboutState extends State<About> {
                     color: Colors.white),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 35.0),
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      // Add Refresh here
-                    },
-                    child: ListView(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30.0, right: 30.0, bottom: 50.0),
-                          child: Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Center(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "COVID-19 | PHILIPPINES",
-                                        style: TextStyle(
-                                          color: kBodyTextColor1,
-                                          fontSize: 14.0
-                                        ),
-                                      ),
-                                      Text(
-                                          "INFORMATION CENTER",
-                                          style: TextStyle(
-                                          color: kBodyTextColor1,
-                                          letterSpacing: 0.5,
-                                          fontSize: 28.0,
-                                            fontWeight: FontWeight.bold
-                                        ),
-                                      ),
-                                      Text(
-                                        "By John Patrick Prieto",
-                                        style: TextStyle(
-                                          color: kBodyTextColor1,
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                      Text(
-                                        "© 2021",
-                                        style: TextStyle(
-                                          color: kBodyTextColor1,
-                                          fontSize: 10.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20.0),
-                                  child: Text(
-                                    "     This Mobile Application was made as an activity for one of my subjects, NSTP2-CWTS, which had an activity period from February 27 to April 17, 2021.",
-                                    textAlign: TextAlign.justify,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 15.0),
-                                  child: Text(
-                                    "      Nonetheless, this mobile application was made with the intention of helping the community, not just because its a requirement.",
-                                    textAlign: TextAlign.justify,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 15.0),
-                                  child: Text(
-                                    "      I hope that this application may prove to be beneficial to you and to the community.",
-                                    textAlign: TextAlign.justify,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 50.0),
-                                  child: Text(
-                                    "Social Media",
+                child: ListView(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 50.0, left: 30.0, right: 30.0, bottom: 50.0),
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "COVID-19 | PHILIPPINES",
                                     style: TextStyle(
                                       color: kBodyTextColor1,
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.0
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 15.0, top: 15.0),
-                                  child: Row(
-                                    children: [
-                                      FaIcon(FontAwesomeIcons.facebook, color: kAppBarColor),
-                                      SizedBox(
-                                        width: 10.0,
-                                      ),
-                                      Text(
-                                        "Facebook: ",
-                                      ),
-                                    ],
+                                  Text(
+                                      "INFORMATION CENTER",
+                                      style: TextStyle(
+                                      color: kBodyTextColor1,
+                                      letterSpacing: 0.5,
+                                      fontSize: 24.0,
+                                        fontWeight: FontWeight.bold
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 15.0, top: 5.0),
-                                  child: Row(
-                                    children: [
-                                      FaIcon(FontAwesomeIcons.twitter, color: Colors.lightBlueAccent),
-                                      SizedBox(
-                                        width: 10.0,
-                                      ),
-                                      Text(
-                                        "Twitter: ",
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 15.0, top: 5.0),
-                                  child: Row(
-                                    children: [
-                                      FaIcon(FontAwesomeIcons.solidEnvelope),
-                                      SizedBox(
-                                        width: 10.0,
-                                      ),
-                                      Text(
-                                        "Gmail: ",
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 30.0),
-                                  child: Text(
-                                    "Share this App",
+                                  Text(
+                                    "By John Patrick Prieto",
                                     style: TextStyle(
                                       color: kBodyTextColor1,
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.0,
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Text(
-                                    "Insert QR Code here later\n"
-                                        "also embed facebook and twitter post",
+                                  Text(
+                                    "© 2021",
+                                    style: TextStyle(
+                                      color: kBodyTextColor1,
+                                      fontSize: 10.0,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: Text(
+                                "     This Mobile Application was made as an activity for one of my subjects, NSTP2-CWTS, which had an activity period from February 27 to April 17, 2021.",
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Text(
+                                "      Nonetheless, this mobile application was made with the intention of helping the community, not just because it's part of my requirements.",
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Text(
+                                "      I hope that this application may prove to be beneficial to you and to the community.",
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 50.0),
+                              child: Text(
+                                "Social Media",
+                                style: TextStyle(
+                                  color: kBodyTextColor1,
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0, top: 15.0),
+                              child: Row(
+                                children: [
+                                  FaIcon(FontAwesomeIcons.facebook, color: kAppBarColor),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Text(
+                                    "Facebook: @StudioPrieto",
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0, top: 5.0),
+                              child: Row(
+                                children: [
+                                  FaIcon(FontAwesomeIcons.twitter, color: Colors.lightBlueAccent),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Text(
+                                    "Twitter: @studio_prieto",
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0, top: 5.0),
+                              child: Row(
+                                children: [
+                                  FaIcon(FontAwesomeIcons.solidEnvelope),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Text(
+                                    "Gmail: studioprieto19@gmail.com ",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),

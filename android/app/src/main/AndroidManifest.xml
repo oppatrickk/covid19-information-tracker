@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.studioprieto.covid19_information_center">
    <application
-        android:label="covid19_information_center"
+        android:label="InfoCentre"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

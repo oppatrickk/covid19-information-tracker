@@ -11,6 +11,7 @@ import 'package:covid19_information_center/pages/cases_subpages/cases_nationwide
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
 import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
+import 'package:covid19_information_center/database/jhucsse/jhucsse_backup_provider.dart';
 import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
 import 'package:covid19_information_center/database/initialize_data.dart';
 
@@ -53,7 +54,7 @@ class _CaseSumState extends State<CaseSum> {
       provider = Provider.of<FetchWorldometerDataProvider>(context);
     }
 
-    if (worldometer.countries[157].todayCases != 0 && dateNow >= 7.0) {
+    if (worldometer.countries[157].todayCases != 0 && dateNow >= 16.0) {
         date = today;
     }
     else {
@@ -63,7 +64,9 @@ class _CaseSumState extends State<CaseSum> {
     Future <void> _onRefresh() async {
       await Future.delayed(Duration(milliseconds: 3000));
       Provider.of<FetchWorldometerDataProvider>(context, listen: false).initialize();
+      Provider.of<FetchWorldometerBackupDataProvider>(context, listen: false).initialize();
       Provider.of<FetchJhucsseDataProvider>(context, listen: false).initialize();
+      Provider.of<FetchJhucsseBackupDataProvider>(context, listen: false).initialize();
       Provider.of<FetchFirebaseDataProvider>(context, listen: false).initialize();
 
       Navigator.pop(context);
@@ -77,7 +80,7 @@ class _CaseSumState extends State<CaseSum> {
         body: Stack(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height - 82.0,
+              height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               color: (Colors.transparent),
             ),
@@ -88,60 +91,45 @@ class _CaseSumState extends State<CaseSum> {
                         topLeft: Radius.circular(45.0),
                         topRight: Radius.circular(45.0),
                       ),
-                      color: Colors.white),
-                  height: MediaQuery.of(context).size.height - 100.0,
-                  width: MediaQuery.of(context).size.width),
+                      color: Colors.white,
+                  ),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width
+              ),
             ),
             RefreshIndicator(
               onRefresh: () => _onRefresh(),
-              child: ShaderMask(
-                shaderCallback: (Rect rect) {
-                  return LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.purple,
-                      Colors.transparent,
-                      Colors.transparent,
-                      Colors.purple
-                    ],
-                    stops: [
-                      0.0,
-                      0.1,
-                      0.9,
-                      1.0
-                    ], // 10% purple, 80% transparent, 10% purple
-                  ).createShader(rect);
-                },
-                blendMode: BlendMode.dstOut,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 25.0),
-                  child: ListView.builder(
-                    itemCount: 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 15.0, left: 30, right: 30.0),
-                        child: Column(
-                          children: [
-                            CaseCard(
-                              title: "Nationwide Cases",
-                              date: "As of ${dateFormat.format(date)} | 4PM",
-                              totalCases: numbers.format(provider.countries[157].cases),
-                              newCases: numbers.format(provider.countries[157].todayCases),
-                              page: Nationwide(),
-                            ),
-                            CaseCard(
-                              title: "Bicol Region Cases",
-                              date: "As of ${firebase.bicol[0].date}",
-                              totalCases: numbers.format(firebase.bicol[0].caseTotal),
-                              newCases: numbers.format(firebase.bicol[0].caseToday),
-                              page: Region(),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 40.0, left: 30, right: 30.0, bottom: 50.0),
+                      child: Column(
+                        children: [
+                          CaseCard(
+                            title: "Nationwide Cases",
+                            date: "As of ${dateFormat.format(date)} | 4PM",
+                            totalCases: numbers.format(provider.countries[157].cases),
+                            newCases: numbers.format(provider.countries[157].todayCases),
+                            color: Colors.red.withOpacity(0.1),
+                            backgroundColor: Colors.red,
+                            page: Nationwide(),
+                          ),
+                          CaseCard(
+                            title: "Bicol Region Cases",
+                            date: "As of ${firebase.bicol[0].date1} | ${firebase.bicol[0].time}",
+                            totalCases: numbers.format(firebase.bicol[0].caseTotal),
+                            newCases: numbers.format(firebase.bicol[0].caseToday),
+                            color: Colors.blue.withOpacity(0.1),
+                            backgroundColor: Colors.blue,
+                            page: Region(),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ),

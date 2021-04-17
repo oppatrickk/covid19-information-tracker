@@ -122,7 +122,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Pa
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.1.0] C:\Users\Patrick\.gradle\caches\transforms-2\files-2.1\d481b4719f34ec119768e958e701eaf6\core-1.1.0\AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from C:\Users\Patrick\Documents\Projects\Programming\Flutter\covid19_information_center\android\app\src\main\AndroidManifest.xml:4:9-51
+		ADDED from C:\Users\Patrick\Documents\Projects\Programming\Flutter\covid19_information_center\android\app\src\main\AndroidManifest.xml:4:9-35
 	android:icon
 		ADDED from C:\Users\Patrick\Documents\Projects\Programming\Flutter\covid19_information_center\android\app\src\main\AndroidManifest.xml:5:9-43
 activity#com.studioprieto.covid19_information_center.MainActivity
