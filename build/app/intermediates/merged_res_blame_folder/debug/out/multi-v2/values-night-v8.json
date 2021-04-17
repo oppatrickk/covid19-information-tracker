@@ -6,20 +6,20 @@
                 {
                     "source": "C:\\Users\\Patrick\\Documents\\Projects\\Programming\\Flutter\\covid19_information_center\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
-                        "startLines": "3,14",
-                        "startColumns": "4,4",
-                        "startOffsets": "175,829",
-                        "endLines": "7,16",
-                        "endColumns": "12,12",
-                        "endOffsets": "471,995"
+                        "startLines": "3,-1",
+                        "startColumns": "4,-1",
+                        "startOffsets": "172,-1",
+                        "endLines": "8,-1",
+                        "endColumns": "12,-1",
+                        "endOffsets": "524,-1"
                     },
                     "to": {
-                        "startLines": "2,7",
+                        "startLines": "2,8",
                         "startColumns": "4,4",
-                        "startOffsets": "55,352",
-                        "endLines": "6,9",
+                        "startOffsets": "55,411",
+                        "endLines": "7,10",
                         "endColumns": "12,12",
-                        "endOffsets": "347,516"
+                        "endOffsets": "406,575"
                     }
                 }
             ]

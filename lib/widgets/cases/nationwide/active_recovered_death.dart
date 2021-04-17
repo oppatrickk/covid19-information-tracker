@@ -12,7 +12,7 @@ class ActiveRecoveredDeath extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width:  MediaQuery.of(context).size.width/4,
+      width:  MediaQuery.of(context).size.width/4.1,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

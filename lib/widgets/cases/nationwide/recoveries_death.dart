@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:covid19_information_center/constant.dart';
 
 class RecoveriesDeaths extends StatelessWidget {
   final title;
   final number;
+  final color;
 
   const RecoveriesDeaths({
-    Key key, this.title, this.number,
+    Key key, this.title, this.number, this.color,
   }) : super(key: key);
 
   @override
@@ -16,7 +16,7 @@ class RecoveriesDeaths extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width / 3,
       decoration: BoxDecoration(
-        color: Colors.redAccent.withOpacity(0.15),
+        color: color,
         borderRadius: BorderRadius.circular(6),
 
       ),

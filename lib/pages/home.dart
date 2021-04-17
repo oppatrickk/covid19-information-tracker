@@ -5,12 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Pages
-import 'package:covid19_information_center/pages/information.dart';
 
 // Widgets
 import 'package:covid19_information_center/widgets/home/cases_percentage.dart';
 import 'package:covid19_information_center/widgets/home/mask_hugas_iwas.dart';
-import 'package:covid19_information_center/widgets/home/random_facts.dart';
 
 // Database
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
@@ -53,7 +51,7 @@ class _HomeState extends State<Home> {
       provider = Provider.of<FetchWorldometerDataProvider>(context);
     }
 
-    if (worldometer.countries[157].todayCases != 0 && dateNow >= 7.0) {
+    if (worldometer.countries[157].todayCases != 0 && dateNow >= 16.0) {
       date = today;
     }
     else {
@@ -118,7 +116,7 @@ class _HomeState extends State<Home> {
             RefreshIndicator(
               onRefresh: () => _onRefresh(),
               child: Padding(
-                padding: const EdgeInsets.only(top: 100.0),
+                padding: const EdgeInsets.only(top: 125.0),
                 child: ListView.builder(
                   itemCount: 1,
                   itemBuilder: (BuildContext context, int index) {
@@ -203,7 +201,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.only(bottom: 30.0),
+                            padding: EdgeInsets.only(top: 15.0, bottom: 30.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -243,28 +241,6 @@ class _HomeState extends State<Home> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 15.0),
-                            child: Row(
-                              children: [
-                                FaIcon(
-                                  FontAwesomeIcons.infoCircle
-                                ),
-                                SizedBox(
-                                  width: 10.0,
-                                ),
-                                Text(
-                                  "Information",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 24.0,
-                                    color: kBodyTextColor1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          RandomFacts(),
                         ],
                       ),
                     );

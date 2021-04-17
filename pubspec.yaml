@@ -1,5 +1,5 @@
 name: covid19_information_center
-description: COVID-19 Information Center for Bicol Region
+description: COVID-19 Philippines | Information Center
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.19.3
+  flutter_svg: ^0.21.0+1
   firebase_database: ^6.1.0
   firebase_core: ^1.0.1
   firebase_auth: ^1.0.3
@@ -40,9 +40,24 @@ dependencies:
   charts_flutter: ^0.10.0
   fl_chart: ^0.35.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_native_splash: ^1.1.7+1
+  flutter_launcher_icons: ^0.9.0
+
+flutter_native_splash:
+  image: assets/images/logo.png
+  color: "#ffffff"
+  center: true
+
+
+flutter_icons:
+  image_path: "assets/images/shield.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -57,7 +72,13 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - assets/images/DOH_logo.svg
+  - assets/images/distance.png
+  - assets/images/home.png
+  - assets/images/wash.png
+  - assets/images/mask.png
+  - assets/images/fatigue.png
+  - assets/images/cough.png
+  - assets/images/fever.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

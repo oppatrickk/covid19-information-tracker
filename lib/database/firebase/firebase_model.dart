@@ -1,6 +1,9 @@
 class FirebaseJson {
 
-  String date;
+  String date1;
+  String date2;
+  String day;
+  String time;
 
   String caseNo;
 
@@ -162,6 +165,7 @@ class FirebaseJson {
 
   // Deaths
   num deathsTotal;
+  num deathsToday;
   num deathsBefore;
   num deathsOthers;
 
@@ -177,6 +181,7 @@ class FirebaseJson {
 
   // Tests
   num testsTotal;
+  num testsRepeat;
   num testsOthers;
 
   num testsBRDL;
@@ -195,7 +200,10 @@ class FirebaseJson {
 
   FirebaseJson({
 
-    this.date,
+    this.date1,
+    this.date2,
+    this.day,
+    this.time,
 
     this.caseNo,
 
@@ -356,6 +364,7 @@ class FirebaseJson {
 
     // Deaths
     this.deathsTotal,
+    this.deathsToday,
     this.deathsBefore,
     this.deathsOthers,
 
@@ -371,6 +380,7 @@ class FirebaseJson {
 
     // Tests
     this.testsTotal,
+    this.testsRepeat,
     this.testsOthers,
 
     this.testsBRDL,
@@ -390,7 +400,10 @@ class FirebaseJson {
   });
 
   FirebaseJson.fromJson(Map<String, dynamic> json) {
-    date = json['date'];
+    date1 = json['date1'];
+    date2 = json['date2'];
+    day = json['day'];
+    time = json['time'];
 
     caseNo = json['caseNo'];
 
@@ -537,11 +550,11 @@ class FirebaseJson {
 
         // Recoveries
     recoveriesTotal = json['rTotal'];
-    recoveriesToday = json['tToday'];
+    recoveriesToday = json['rToday'];
 
     recoveriesALBAY = json['rALBAY'];
     recoveriesCAMNORTE = json['rCAMNORTE'];
-    recoveriesCAMSUR = json['CAMSUR'];
+    recoveriesCAMSUR = json['rCAMSUR'];
     recoveriesCATANDUANES = json['rCATANDUANES'];
     recoveriesMASBATE = json['rMASBATE'];
     recoveriesSORSOGON = json['rSORSOGON'];
@@ -551,6 +564,7 @@ class FirebaseJson {
 
     // Deaths
     deathsTotal = json['dTotal'];
+    deathsToday = json['dToday'];
     deathsBefore = json['dBefore'];
     deathsOthers = json['dOthers'];
 
@@ -566,6 +580,7 @@ class FirebaseJson {
 
     // Tests
     testsTotal = json['tTotal'];
+    testsRepeat = json['tRepeat'];
     testsOthers = json['tOthers'];
 
     testsBRDL = json['tBRDRL'];
@@ -587,7 +602,10 @@ class FirebaseJson {
   Map<String, dynamic> toJson(){
     final Map<String, dynamic> data = new Map<String, dynamic> ();
 
-    data['date'] = this.date;
+    data['date1'] = this.date1;
+    data['date2'] = this.date2;
+    data['day'] = this.day;
+    data['time'] = this.time;
 
     data['caseNo'] = this.caseNo;
 
@@ -610,7 +628,7 @@ class FirebaseJson {
     data['aLigao'] = this.activeLigao;
     data['aMalilipot'] = this.activeMalilipot;
     data['aMalinao'] = this.activeMalinao;
-    data['Manito'] = this.activeManito;
+    data['aManito'] = this.activeManito;
     data['aOas'] = this.activeOas;
     data['aPioduran'] = this.activePioduran;
     data['aPolangui'] = this.activePolangui;
@@ -734,11 +752,11 @@ class FirebaseJson {
 
     // Recoveries
     data['rTotal'] = this.recoveriesTotal;
-    data['tToday'] = this.recoveriesToday;
+    data['rToday'] = this.recoveriesToday;
 
     data['rALBAY'] = this.recoveriesALBAY;
     data['rCAMNORTE'] = this.recoveriesCAMNORTE;
-    data['CAMSUR'] = this.recoveriesCAMSUR;
+    data['rCAMSUR'] = this.recoveriesCAMSUR;
     data['rCATANDUANES'] = this.recoveriesCATANDUANES;
     data['rMASBATE'] = this.recoveriesMASBATE;
     data['rSORSOGON'] = this.recoveriesSORSOGON;
@@ -748,6 +766,7 @@ class FirebaseJson {
 
     // Deaths
     data['dTotal'] = this.deathsTotal;
+    data['dToday'] = this.deathsToday;
     data['dBefore'] = this.deathsBefore;
     data['dOthers'] = this.deathsOthers;
 
@@ -763,6 +782,7 @@ class FirebaseJson {
 
     // Tests
     data['tTotal'] = this.testsTotal;
+    data['tRepeat'] = this.testsRepeat;
     data['tOthers'] = this.testsOthers;
 
     data['tBRDRL'] = this.testsBRDL;

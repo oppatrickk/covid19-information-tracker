@@ -7,9 +7,11 @@ class CaseCard extends StatelessWidget {
   final totalCases;
   final newCases;
   final page;
+  final color;
+  final backgroundColor;
 
   const CaseCard({
-    Key key, this.title, this.date, this.totalCases, this.newCases, this.page,
+    Key key, this.title, this.date, this.totalCases, this.newCases, this.page, this.color, this.backgroundColor,
   }) : super(key: key);
 
 
@@ -27,10 +29,10 @@ class CaseCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
+                color: color,
                 spreadRadius: 1,
                 blurRadius: 2,
-                offset: Offset(0, 1),
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -44,7 +46,7 @@ class CaseCard extends StatelessWidget {
                     title,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 28.0,
                       color: Colors.black,
                     ),
                   ),
@@ -99,7 +101,7 @@ class CaseCard extends StatelessWidget {
                     newCases,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.redAccent,
+                      color: Colors.deepOrange,
                     ),
                   ),
                   Text(
@@ -118,7 +120,9 @@ class CaseCard extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.bottomRight,
-                    child: OutlinedButton(
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(16.0)),
+                      color: backgroundColor,
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -128,8 +132,9 @@ class CaseCard extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        "Read More",
+                        "View Details",
                         style: TextStyle(
+                          color: Colors.white,
                         ),
                       ),
                     ),

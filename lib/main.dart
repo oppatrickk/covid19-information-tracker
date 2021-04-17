@@ -8,9 +8,11 @@ import 'package:covid19_information_center/database/worldometer/worldometer_prov
 import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_backup_provider.dart';
-import 'package:covid19_information_center/database/vaccine/vaccine_provider.dart';
 import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+// Widgets
+import 'package:covid19_information_center/widgets/navigation/scroll_behavior.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,20 +33,25 @@ class MyApp extends StatelessWidget {
             create: (_) => FetchJhucsseDataProvider()),
         ChangeNotifierProvider<FetchJhucsseBackupDataProvider>(
             create: (_) => FetchJhucsseBackupDataProvider()),
-        ChangeNotifierProvider<FetchVaccineDataProvider>(
-            create: (_) => FetchVaccineDataProvider()),
         ChangeNotifierProvider<FetchFirebaseDataProvider>(
             create: (_) => FetchFirebaseDataProvider()),
       ],
       child: MaterialApp(
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: MyBehavior(),
+            child: child,
+          );
+        },
+        themeMode: ThemeMode.light,
         title: 'COVID-19 Information Center',
         theme: ThemeData(
             fontFamily: "NotoSansJP",
-            visualDensity: VisualDensity.adaptivePlatformDensity,
             highlightColor: Color(0xFF3383CD),
             textTheme: TextTheme(
               bodyText2: TextStyle(color: kBodyTextColor),
-            )),
+            ),
+        ),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: LoadingData(),

@@ -8,14 +8,12 @@ import 'package:covid19_information_center/database/worldometer/worldometer_serv
 import 'package:covid19_information_center/database/worldometer/worldometer_backup_service.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_service.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_backup_service.dart';
-import 'package:covid19_information_center/database/vaccine/vaccine_service.dart';
 import 'package:covid19_information_center/database/firebase/firebase_service.dart';
 
 import 'package:covid19_information_center/database/jhucsse/jhucsse_provider.dart';
 import 'package:covid19_information_center/database/jhucsse/jhucsse_backup_provider.dart';
 import 'package:covid19_information_center/database/worldometer/worldometer_provider.dart';
 import 'package:covid19_information_center/database/worldometer/worldometer_backup_provider.dart';
-import 'package:covid19_information_center/database/vaccine/vaccine_provider.dart';
 import 'package:covid19_information_center/database/firebase/firebase_provider.dart';
 
 // Widgets
@@ -33,7 +31,6 @@ class _LoadingDataState extends State<LoadingData> {
   WorldometerBackupApiService backupApiService = WorldometerBackupApiService();
   JhucsseApiService jhucsseApiService = JhucsseApiService();
   JhucsseBackupApiService jhucsseBackupApiService = JhucsseBackupApiService();
-  VaccineApiService vaccineeApiService = VaccineApiService();
   FirebaseApiService firebaseApiService = FirebaseApiService();
 
   @override
@@ -42,36 +39,34 @@ class _LoadingDataState extends State<LoadingData> {
     Provider.of<FetchWorldometerBackupDataProvider>(context);
     Provider.of<FetchJhucsseDataProvider>(context);
     Provider.of<FetchJhucsseBackupDataProvider>(context);
-    Provider.of<FetchVaccineDataProvider>(context);
     Provider.of<FetchFirebaseDataProvider>(context);
 
     final provider = Provider.of<FetchWorldometerDataProvider>(context);
 
     return Scaffold(
         body: provider.loading == true
-            ? Container(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2 - 100),
-            child: Center(
-              child: Column(
-                children: [
-                  GlowingProgressIndicator(
-                    child: HeartbeatProgressIndicator(
-                      child: FaIcon(FontAwesomeIcons.shieldVirus,
-                          size: 34,
-                          color: Colors.blueAccent),
-                    ),
-                  ),
-                  SizedBox(height: 34),
-                  Text(
-                    "Loading Data",
-                    style: TextStyle(
-                      color: Colors.blueAccent,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                ],
+            ? Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GlowingProgressIndicator(
+                child: HeartbeatProgressIndicator(
+                  child: FaIcon(FontAwesomeIcons.shieldVirus,
+                      size: 34,
+                      color: Colors.blueAccent),
+                ),
               ),
-            )
+              SizedBox(height: 34),
+              Text(
+                "Loading Data",
+                style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
         )
             : MainAppBar(),
     );
